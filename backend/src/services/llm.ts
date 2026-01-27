@@ -35,15 +35,20 @@ function getGoogleClient(): GoogleGenerativeAI {
 }
 
 // Supported models configuration
+// Pricing per million tokens (input/output):
+// Claude Haiku 4.5: $1/$5 | Sonnet 4.5: $3/$15 | Opus 4.5: $5/$25
+// GPT-4o mini: $0.15/$0.60 | GPT-5 mini: Fast & cheap | GPT-5.2: Latest flagship
 export const SUPPORTED_MODELS: Record<LLMProvider, Array<{ id: string; name: string; recommended?: boolean }>> = {
   anthropic: [
-    { id: 'claude-sonnet-4-20250514', name: 'Claude Sonnet 4', recommended: true },
-    { id: 'claude-3-5-sonnet-20241022', name: 'Claude 3.5 Sonnet' },
-    { id: 'claude-3-5-haiku-20241022', name: 'Claude 3.5 Haiku (faster)' },
+    { id: 'claude-sonnet-4-5-20250929', name: 'Claude Sonnet 4.5 (Balanced)', recommended: true },
+    { id: 'claude-haiku-4-5-20251001', name: 'Claude Haiku 4.5 (Fastest, Cheapest)' },
+    { id: 'claude-opus-4-20250514', name: 'Claude Opus 4.5 (Most Capable)' },
   ],
   openai: [
-    { id: 'gpt-4o', name: 'GPT-4o', recommended: true },
-    { id: 'gpt-4o-mini', name: 'GPT-4o Mini (faster)' },
+    { id: 'gpt-5.2', name: 'GPT-5.2 (Latest Flagship)', recommended: true },
+    { id: 'gpt-4o-mini', name: 'GPT-4o Mini (Cheapest)' },
+    { id: 'gpt-5-mini', name: 'GPT-5 Mini (Fast & Cheap)' },
+    { id: 'gpt-5', name: 'GPT-5' },
   ],
   google: [
     { id: 'gemini-1.5-pro', name: 'Gemini 1.5 Pro', recommended: true },
