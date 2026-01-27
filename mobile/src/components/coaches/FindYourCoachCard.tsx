@@ -3,13 +3,12 @@ import { useRouter } from 'expo-router';
 import { ChevronRightIcon } from '../ui/Icons';
 
 const colors = {
-  surface: '#FFFFFF',
-  surfaceSecondary: '#F3F4F6',
-  border: '#E5E7EB',
+  sage: '#6F8F79',        // CTA start (spec)
+  sageDark: '#4F6F5A',    // CTA end (spec)
+  cardBg: 'rgba(255, 255, 255, 0.92)',  // Enhanced glass white
+  cardBorder: '#D1D5DB',  // Darker, more visible borders
   textPrimary: '#111827',
   textSecondary: '#6B7280',
-  primary: '#4A7C59',
-  primaryDark: '#3D6649',
 };
 
 /**
@@ -21,16 +20,17 @@ export function FindYourCoachCard() {
 
   return (
     <View
-      className="mx-5 p-4 mb-6"
+      className="mx-5 rounded-2xl p-4 mb-6"
       style={{
-        backgroundColor: colors.surfaceSecondary,
-        borderWidth: 1,
-        borderColor: colors.border,
-        borderRadius: 12,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 1 },
-        shadowOpacity: 0.08,
-        shadowRadius: 3,
+        backgroundColor: colors.cardBg,
+        borderWidth: 1.5,
+        borderColor: colors.cardBorder,
+        // Enhanced shadow for sharper depth
+        shadowColor: '#111827',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.12,
+        shadowRadius: 12,
+        elevation: 4,
       }}
     >
       {/* Title and subtitle */}
@@ -52,11 +52,8 @@ export function FindYourCoachCard() {
         {/* Get matched button */}
         <Pressable
           onPress={() => router.push('/quiz')}
-          className="px-4 py-1.5 active:opacity-80 mr-3"
-          style={{
-            backgroundColor: colors.primary,
-            borderRadius: 10,
-          }}
+          className="px-4 py-1.5 rounded-full active:opacity-80 mr-3"
+          style={{ backgroundColor: colors.sage }}
         >
           <Text className="text-body-sm font-inter-semibold text-white">
             Get matched
@@ -70,11 +67,11 @@ export function FindYourCoachCard() {
         >
           <Text
             className="text-body-sm font-inter-medium"
-            style={{ color: colors.primary }}
+            style={{ color: colors.sageDark }}
           >
             Browse categories
           </Text>
-          <ChevronRightIcon size={16} color={colors.primary} />
+          <ChevronRightIcon size={16} color={colors.sageDark} />
         </Pressable>
       </View>
     </View>

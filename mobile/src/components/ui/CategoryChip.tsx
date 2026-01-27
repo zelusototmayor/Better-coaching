@@ -1,16 +1,19 @@
 import { View, Text, Pressable, ScrollView } from 'react-native';
 
 // ═══════════════════════════════════════════════════════════════════════════
-// BETTER COACHING DESIGN SYSTEM - NEUTRAL BASE WITH SAGE ACCENT
+// UI DESIGN SPEC V1 COLORS
 // ═══════════════════════════════════════════════════════════════════════════
 
 const colors = {
-  surface: '#FFFFFF',
-  border: '#E5E7EB',
-  textPrimary: '#111827',
-  textSecondary: '#6B7280',
-  primary: '#4A7C59',
-  primaryLight: '#E8F0EB',
+  sage: '#6F8F79',          // CTA start (spec)
+  sageDark: '#4F6F5A',      // CTA end (spec)
+  sageLight: '#DCE9DF',     // Sage pastel (spec)
+  warmWhite: 'rgba(255,255,255,0.88)', // Spec glass surface
+  warmWhiteSharp: 'rgba(255, 255, 255, 0.92)', // NEW: Enhanced glass for sharper look
+  border: '#E7E7E7',        // Spec border
+  borderSharp: '#D1D5DB',   // NEW: Darker border for sharper look
+  textPrimary: '#111827',   // Spec primary text
+  textSecondary: '#6B7280', // Spec secondary text
 };
 
 interface CategoryChipProps {
@@ -37,15 +40,14 @@ export function CategoryChip({
     <Pressable
       onPress={onPress}
       className={[
-        'px-5 py-2.5 mr-2',
+        'px-5 py-2.5 rounded-chip mr-2',
         'active:opacity-80',
         className,
       ].filter(Boolean).join(' ')}
       style={{
-        backgroundColor: selected ? colors.primary : colors.surface,
+        backgroundColor: selected ? colors.sage : colors.warmWhite,
         borderWidth: 1,
-        borderColor: selected ? colors.primary : colors.border,
-        borderRadius: 10,
+        borderColor: selected ? colors.sage : colors.border,
       }}
     >
       <Text
@@ -142,25 +144,27 @@ export function CategoryCard({
         className,
       ].filter(Boolean).join(' ')}
       style={{
-        backgroundColor: colors.surface,
-        borderWidth: 1,
-        borderColor: colors.border,
-        borderRadius: 12,
+        backgroundColor: colors.warmWhiteSharp,
+        borderWidth: 1.5,
+        borderColor: colors.borderSharp,
+        borderRadius: 22, // Spec card/chip radius
         minWidth: 140,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 1 },
-        shadowOpacity: 0.08,
-        shadowRadius: 3,
+        // Enhanced shadow for sharper depth
+        shadowColor: '#111827',
+        shadowOffset: { width: 0, height: 3 },
+        shadowOpacity: 0.10,
+        shadowRadius: 10,
+        elevation: 3,
       }}
     >
       {/* Subtle initial circle on left - smaller 32px */}
       <View
         className="w-8 h-8 rounded-full items-center justify-center mr-2.5"
-        style={{ backgroundColor: colors.primaryLight }}
+        style={{ backgroundColor: colors.sageLight }}
       >
         <Text
           className="font-inter-semibold text-body-sm"
-          style={{ color: colors.primary }}
+          style={{ color: colors.sageDark }}
         >
           {initial}
         </Text>

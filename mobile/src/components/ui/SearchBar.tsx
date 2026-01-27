@@ -3,17 +3,16 @@ import { View, TextInput, Pressable, Text } from 'react-native';
 import { SearchIcon, XIcon } from './Icons';
 
 // ═══════════════════════════════════════════════════════════════════════════
-// BETTER COACHING DESIGN SYSTEM - NEUTRAL BASE WITH SAGE ACCENT
+// UI DESIGN SPEC V1 COLORS
 // ═══════════════════════════════════════════════════════════════════════════
 
 const colors = {
-  surface: '#FFFFFF',
-  surfaceSecondary: '#F3F4F6',
-  border: '#E5E7EB',
-  borderFocus: '#4A7C59',
-  textPrimary: '#111827',
-  textTertiary: '#9CA3AF',
-  primary: '#4A7C59',
+  warmWhite: 'rgba(255, 255, 255, 0.92)', // Enhanced glass surface
+  border: '#D1D5DB',           // Darker border for sharper look
+  borderFocus: '#6F8F79',      // Spec sage CTA
+  textPrimary: '#111827',      // Spec primary text
+  textMuted: '#9CA3AF',        // Spec muted text (placeholder)
+  surface: '#F5F5F7',          // Cooler gray background
 };
 
 interface SearchBarProps {
@@ -95,15 +94,22 @@ export function SearchBar({
           className,
         ].filter(Boolean).join(' ')}
         style={{
-          backgroundColor: colors.surfaceSecondary,
+          backgroundColor: colors.warmWhite,
+          borderWidth: 1.5,
           borderColor: colors.border,
-          borderRadius: 10,
+          borderRadius: 20, // Spec: input radius 18-20px
+          // Enhanced shadow for sharper depth
+          shadowColor: '#111827',
+          shadowOffset: { width: 0, height: 2 },
+          shadowOpacity: 0.08,
+          shadowRadius: 8,
+          elevation: 2,
         }}
       >
-        <SearchIcon size={18} color={colors.textTertiary} />
+        <SearchIcon size={18} color={colors.textMuted} />
         <Text
           className="flex-1 ml-3 text-body"
-          style={{ color: colors.textTertiary }}
+          style={{ color: colors.textMuted }}
         >
           {placeholder}
         </Text>
@@ -118,12 +124,19 @@ export function SearchBar({
         className,
       ].filter(Boolean).join(' ')}
       style={{
-        backgroundColor: colors.surfaceSecondary,
+        backgroundColor: colors.warmWhite,
+        borderWidth: 1.5,
         borderColor: isFocused ? colors.borderFocus : colors.border,
-        borderRadius: 10,
+        borderRadius: 20, // Spec: input radius 18-20px
+        // Enhanced shadow for sharper depth
+        shadowColor: '#111827',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.08,
+        shadowRadius: 8,
+        elevation: 2,
       }}
     >
-      <SearchIcon size={18} color={colors.textTertiary} />
+      <SearchIcon size={18} color={colors.textMuted} />
       <TextInput
         value={internalValue}
         onChangeText={handleChangeText}
@@ -131,7 +144,7 @@ export function SearchBar({
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
         placeholder={placeholder}
-        placeholderTextColor={colors.textTertiary}
+        placeholderTextColor={colors.textMuted}
         autoFocus={autoFocus}
         returnKeyType="search"
         className="flex-1 ml-3 text-body font-inter-regular"
@@ -144,9 +157,9 @@ export function SearchBar({
         <Pressable
           onPress={handleClear}
           className="ml-2 w-6 h-6 rounded-full items-center justify-center"
-          style={{ backgroundColor: colors.surfaceSecondary }}
+          style={{ backgroundColor: colors.surface }}
         >
-          <XIcon size={14} color={colors.textTertiary} />
+          <XIcon size={14} color={colors.textMuted} />
         </Pressable>
       )}
     </View>

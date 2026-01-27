@@ -9,130 +9,181 @@ module.exports = {
     extend: {
       colors: {
         // ═══════════════════════════════════════════════════════════════════
-        // BETTER COACHING DESIGN SYSTEM - NEUTRAL BASE WITH SAGE ACCENT
+        // UI DESIGN SPEC V1 - PREMIUM PASTEL COLOR PALETTE
         // ═══════════════════════════════════════════════════════════════════
 
-        // Primary - Sage (calming, growth, wellness) - THE SOLE ACCENT COLOR
+        // Primary - Sage (calming, growth, wellness)
         sage: {
-          50: '#F0F4F1',
-          100: '#E8F0EB',  // primaryLight (tag backgrounds, selected states)
-          200: '#D1E3D8',
-          300: '#A8C9B3',
-          400: '#6B9C7A',  // Lighter sage variation
-          500: '#4A7C59',  // primary (buttons, CTAs, links)
-          600: '#3D6649',  // primaryDark (pressed states)
-          700: '#2D5039',
-          800: '#1F3929',
-          900: '#14281C',
-          DEFAULT: '#4A7C59',
+          50: '#F4F7F3',
+          100: '#E8EFE6',
+          200: '#DCE9DF',  // Main pastel (spec)
+          300: '#B8C9B2',
+          400: '#6F8F79',  // CTA start (spec)
+          500: '#5F8069',
+          600: '#4F6F5A',  // CTA end (spec)
+          700: '#3F5F4A',
+          800: '#2F4F3A',
+          900: '#1F3F2A',
+          DEFAULT: '#6F8F79',
         },
 
         // Primary alias (maps to sage for common convention)
         primary: {
-          50: '#F0F4F1',
-          100: '#E8F0EB',  // primaryLight
-          200: '#D1E3D8',
-          300: '#A8C9B3',
-          400: '#6B9C7A',
-          500: '#4A7C59',  // primary DEFAULT
-          600: '#3D6649',  // primaryDark
-          700: '#2D5039',
-          800: '#1F3929',
-          900: '#14281C',
-          DEFAULT: '#4A7C59',
+          50: '#F4F7F3',
+          100: '#E8EFE6',
+          200: '#DCE9DF',
+          300: '#B8C9B2',
+          400: '#6F8F79',
+          500: '#5F8069',
+          600: '#4F6F5A',
+          700: '#3F5F4A',
+          800: '#2F4F3A',
+          900: '#1F3F2A',
+          DEFAULT: '#6F8F79',
         },
 
-        // Neutral - Gray scale for backgrounds, borders, text hierarchy
+        // Neutral - Gray scale for backgrounds, borders, disabled states
         neutral: {
-          50: '#F9FAFB',
-          100: '#F3F4F6',  // surfaceSecondary
-          200: '#E5E7EB',  // border
-          300: '#D1D5DB',
-          400: '#9CA3AF',  // textTertiary
-          500: '#6B7280',  // textSecondary
-          600: '#4B5563',
-          700: '#374151',
-          800: '#1F2937',
-          900: '#111827',  // textPrimary
-          DEFAULT: '#6B7280',
+          50: '#FAFAFA',
+          100: '#F5F5F5',
+          200: '#E5E5E5',
+          300: '#D4D4D4',
+          400: '#A3A3A3',
+          500: '#737373',
+          600: '#525252',
+          700: '#404040',
+          800: '#262626',
+          900: '#171717',
         },
 
-        // Premium - Purple tone (ONLY for premium badges/indicators)
-        premium: {
-          50: '#F5F3F7',
-          100: '#E8E5F0',
-          200: '#D8D3E5',
-          300: '#B8AFD1',
-          400: '#9A8FB8',
-          500: '#7C6FA0',  // premium (only for badges)
-          600: '#6B5F8A',
-          700: '#544D6E',
-          800: '#3F3B52',
-          900: '#2D2A3A',
-          DEFAULT: '#7C6FA0',
+        // Secondary - Lavender (calm, creativity, premium)
+        lavender: {
+          50: '#F8F5FA',
+          100: '#F0EAF4',
+          200: '#E7E0F3',  // Main pastel (spec)
+          300: '#CDBFDB',
+          400: '#B8A9C9',
+          500: '#A08FB8',
+          600: '#8A7A9E',
+          700: '#6E6180',
+          800: '#564C64',
+          900: '#433B4E',
+          DEFAULT: '#E7E0F3',
         },
 
-        // Surface colors for backgrounds - NEUTRAL WHITES/GRAYS
+        // Accent - Blush (warmth, approachability)
+        blush: {
+          50: '#FDF6F6',
+          100: '#FAEAEA',
+          200: '#F0D4D4',
+          300: '#E2BABA',
+          400: '#D4A5A5',
+          500: '#C08888',
+          600: '#B87878',
+          700: '#9A5F5F',
+          800: '#7A4B4B',
+          900: '#5F3A3A',
+          DEFAULT: '#D4A5A5',
+        },
+
+        // Accent - Sky (clarity, trust, openness)
+        sky: {
+          50: '#F5F9FB',
+          100: '#E8F2F7',
+          200: '#D9ECF7',  // Main pastel (spec)
+          300: '#BCD5E2',
+          400: '#A5C4D4',
+          500: '#8AB1C4',
+          600: '#7A9EB0',
+          700: '#5F7D8C',
+          800: '#4A626E',
+          900: '#3A4D56',
+          DEFAULT: '#D9ECF7',
+        },
+
+        // Accent - Sand (warmth, tertiary)
+        sand: {
+          50: '#FBF9F6',
+          100: '#F7F3ED',
+          200: '#F1E9DD',  // Main pastel (spec)
+          300: '#E5D9C7',
+          400: '#D9C9B1',
+          500: '#CDB99B',
+          DEFAULT: '#F1E9DD',
+        },
+
+        // Neutral - Cream & Warm tones
+        cream: {
+          50: '#FDFCFA',
+          100: '#FAF8F5',
+          200: '#F5F0E8',
+          300: '#EDE5D8',
+          400: '#E0D4C4',
+          500: '#CFC0AC',
+          DEFAULT: '#F5F0E8',
+        },
+
+        // Surface colors for backgrounds (spec)
         surface: {
-          DEFAULT: '#FFFFFF',  // White card backgrounds
-          secondary: '#F3F4F6',  // Subtle gray for sections
-          tertiary: '#F9FAFB',
+          DEFAULT: '#F7F6F3',  // Main background (spec)
+          warm: '#FDFCFA',
+          muted: '#F5F3F0',
         },
 
-        // Background colors (alias for surface)
+        // Background colors (alias for surface for common convention)
         background: {
-          DEFAULT: '#FFFFFF',
-          light: '#FFFFFF',
+          DEFAULT: '#F7F6F3',
+          light: '#F7F6F3',
           dark: '#1F2937',
         },
 
-        // Text colors - REFINED HIERARCHY
+        // Text colors (spec)
         text: {
-          primary: '#111827',    // Main text
-          secondary: '#6B7280',  // Secondary text
-          tertiary: '#9CA3AF',   // Muted/placeholder text (was 'muted')
+          primary: '#111827',    // Spec value
+          secondary: '#6B7280',  // Spec value
+          muted: '#9CA3AF',      // Spec value (placeholder)
           inverse: '#FFFFFF',
         },
 
-        // Border colors - CLEAN GRAYS
+        // Border colors (spec)
         border: {
-          DEFAULT: '#E5E7EB',  // Main border color
-          light: '#F3F4F6',
-          dark: '#D1D5DB',
+          DEFAULT: '#E7E7E7',  // Spec value
+          light: '#F0EDE8',
+          dark: '#D8D5D0',
         },
 
         // ═══════════════════════════════════════════════════════════════════
         // SEMANTIC COLORS - For specific purposes
         // ═══════════════════════════════════════════════════════════════════
 
-        // Success - Clean green
+        // Success - Green (spec: #22C55E)
         success: {
           50: '#F0FDF4',
           100: '#DCFCE7',
           200: '#BBF7D0',
           300: '#86EFAC',
           400: '#4ADE80',
-          500: '#22C55E',
-          600: '#16A34A',  // Main success
+          500: '#22C55E',  // Main success (spec)
+          600: '#16A34A',
           700: '#15803D',
           800: '#166534',
           900: '#14532D',
-          DEFAULT: '#16A34A',
+          DEFAULT: '#22C55E',
         },
 
-        // Error - Clean red
+        // Error - Soft red (aligned with blush)
         error: {
-          50: '#FEF2F2',
-          100: '#FEE2E2',
-          200: '#FECACA',
-          300: '#FCA5A5',
-          400: '#F87171',
-          500: '#EF4444',
-          600: '#DC2626',  // Main error
-          700: '#B91C1C',
-          800: '#991B1B',
-          900: '#7F1D1D',
-          DEFAULT: '#DC2626',
+          50: '#FEF5F5',
+          100: '#FDE8E8',
+          200: '#FAD0D0',
+          300: '#F5ABAB',
+          400: '#ED7D7D',
+          500: '#E25555',
+          600: '#CF3A3A',  // Main error
+          700: '#AD2E2E',
+          800: '#8F2929',
+          900: '#772828',
+          DEFAULT: '#CF3A3A',
         },
 
         // Warning - Soft amber
@@ -150,21 +201,33 @@ module.exports = {
           DEFAULT: '#E8920F',
         },
 
-        // ═══════════════════════════════════════════════════════════════════
-        // GLASS EFFECTS - Minimal use, neutral white
-        // ═══════════════════════════════════════════════════════════════════
-        glass: {
-          white: 'rgba(255, 255, 255, 0.95)',
-          border: 'rgba(229, 231, 235, 0.8)',
-          shadow: 'rgba(17, 24, 39, 0.06)',
+        // Premium/Gold - For subscription badges
+        premium: {
+          50: '#FFFDF5',
+          100: '#FFF9E5',
+          200: '#FFF0C2',
+          300: '#FFE599',
+          400: '#FFD966',
+          500: '#FFCC33',
+          600: '#E6B800',
+          DEFAULT: '#E6B800',
         },
 
         // ═══════════════════════════════════════════════════════════════════
-        // CTA COLORS - Sage green accent
+        // LIQUID GLASS - For glassmorphism effects (spec)
+        // ═══════════════════════════════════════════════════════════════════
+        glass: {
+          white: 'rgba(255, 255, 255, 0.88)',  // Spec surface opacity
+          border: 'rgba(255, 255, 255, 0.4)',
+          shadow: 'rgba(17, 24, 39, 0.06)',    // Spec shadow color
+        },
+
+        // ═══════════════════════════════════════════════════════════════════
+        // CTA COLORS (spec)
         // ═══════════════════════════════════════════════════════════════════
         cta: {
-          start: '#4A7C59',  // primary
-          end: '#3D6649',    // primaryDark
+          start: '#6F8F79',  // Gradient start
+          end: '#4F6F5A',    // Gradient end
         },
 
         // Ink color for dark text/icons on light surfaces (spec)
@@ -194,16 +257,16 @@ module.exports = {
       },
 
       borderRadius: {
-        'card': '12px',       // Professional, crisp cards (was 22px)
-        'card-sm': '10px',    // Smaller cards/elements
-        'button': '10px',     // Buttons (was 20px)
-        'input': '10px',      // Inputs/search bars (was 20px)
-        'chip': '10px',       // Pills/chips (was 22px)
-        'pill': '9999px',     // Full pill shape
+        'card': '22px',       // Spec: 22px (was 16px)
+        'card-sm': '18px',    // Spec: 18-20px (was 14px)
+        'button': '20px',     // Spec: 18-20px (was 14px)
+        'input': '20px',      // Spec: 18-20px (new)
+        'chip': '22px',       // Spec: 22px (was 20px)
+        'pill': '9999px',     // Unchanged
         'avatar': '14px',     // Unchanged
         'avatar-sm': '12px',  // Unchanged
         'avatar-lg': '22px',  // Unchanged
-        'tab-bar': '0px',     // No rounded corners on tab bar
+        'tab-bar': '24px',    // Spec: 22-24px (was 30px)
       },
 
       spacing: {
@@ -214,14 +277,20 @@ module.exports = {
       },
 
       boxShadow: {
-        // Clean, subtle shadows - Linear/Notion style
-        'sm': '0 1px 2px rgba(0, 0, 0, 0.06)',
-        'md': '0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06)',
-        'lg': '0 4px 6px rgba(0, 0, 0, 0.1)',
-        // Card shadow - subtle and crisp
-        'card': '0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06)',
-        'card-hover': '0 2px 4px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06)',
-        'button': '0 1px 2px rgba(0, 0, 0, 0.06)',
+        // UI Design Spec V1 - Wide/soft shadows
+        'sm': '0 4px 12px rgba(17, 24, 39, 0.04)',
+        'md': '0 8px 20px rgba(17, 24, 39, 0.06)',
+        'lg': '0 12px 36px rgba(17, 24, 39, 0.08)',
+        // Card shadow (spec): 0 10px 28px rgba(17,24,39,0.06)
+        'card': '0 10px 28px rgba(17, 24, 39, 0.06)',
+        'card-hover': '0 14px 36px rgba(17, 24, 39, 0.08)',
+        'button': '0 6px 16px rgba(17, 24, 39, 0.08)',
+        // Elevated shadow (spec): 0 18px 50px rgba(17,24,39,0.12)
+        'elevated': '0 18px 50px rgba(17, 24, 39, 0.12)',
+        // FAB shadow (spec): 0 16px 34px rgba(17,24,39,0.28)
+        'fab': '0 16px 34px rgba(17, 24, 39, 0.28)',
+        // Liquid glass shadow
+        'glass': '0 10px 28px rgba(17, 24, 39, 0.06)',
       },
 
       // Backdrop blur for liquid glass effect

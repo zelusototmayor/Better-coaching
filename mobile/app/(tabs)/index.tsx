@@ -18,35 +18,27 @@ import { FindYourCoachCard } from '../../src/components/coaches/FindYourCoachCar
 import { SearchBar, CategoryCard } from '../../src/components/ui';
 
 // ═══════════════════════════════════════════════════════════════════════════
-// BETTER COACHING DESIGN SYSTEM - NEUTRAL BASE WITH SAGE ACCENT
+// UI DESIGN SPEC V2 - SHARPER, GLASSIER AESTHETIC
 // ═══════════════════════════════════════════════════════════════════════════
 
 const colors = {
-  // Backgrounds
-  background: '#FFFFFF',
-  surface: '#FFFFFF',
-  surfaceSecondary: '#F3F4F6',
-  border: '#E5E7EB',
-  // Text
-  textPrimary: '#111827',
-  textSecondary: '#6B7280',
-  textTertiary: '#9CA3AF',
-  // Accent (sage green)
-  primary: '#4A7C59',
-  primaryLight: '#E8F0EB',
-  primaryDark: '#3D6649',
-  // Special
-  premium: '#7C6FA0',
-  error: '#DC2626',
-  success: '#16A34A',
+  sage: '#6F8F79',           // CTA start (spec)
+  sageDark: '#4F6F5A',       // CTA end (spec)
+  sageLight: '#DCE9DF',      // Sage pastel (spec)
+  surface: '#F5F5F7',        // NEW: Cool gray background (iOS-style)
+  cardBg: 'rgba(255, 255, 255, 0.92)',  // NEW: Enhanced glass white
+  cardBorder: '#D1D5DB',     // NEW: Darker, more visible borders
+  textPrimary: '#111827',    // Spec primary text
+  textSecondary: '#6B7280',  // Spec secondary text
+  textMuted: '#9CA3AF',      // Spec muted text
 };
 
-// Avatar gradient colors for Continue section cards (sage green only)
+// Avatar gradient colors for Continue section cards (using spec CTA for sage)
 const avatarGradients = [
-  ['#4A7C59', '#3D6649'], // Sage green gradient (primary to primaryDark)
-  ['#5A8B69', '#4A7C59'], // Lighter sage variation
-  ['#3D6649', '#2D5039'], // Darker sage variation
-  ['#6B9C7A', '#5A8B69'], // Lightest sage variation
+  ['#C4B5D4', '#A890BE'], // Lavender/purple
+  ['#6F8F79', '#4F6F5A'], // Sage green (spec CTA gradient)
+  ['#D4A5A5', '#BE8A8A'], // Blush pink
+  ['#A5C4D4', '#8AAEBD'], // Sky blue
 ];
 
 function getAvatarGradient(name: string): [string, string] {
@@ -95,7 +87,7 @@ export default function HomeScreen() {
   const recentConversations = conversations.slice(0, 5);
 
   return (
-    <SafeAreaView className="flex-1" style={{ backgroundColor: colors.background }} edges={['top']}>
+    <SafeAreaView className="flex-1 bg-surface" edges={['top']}>
       <ScrollView
         className="flex-1"
         showsVerticalScrollIndicator={false}
@@ -110,7 +102,7 @@ export default function HomeScreen() {
                 fetchConversations();
               }
             }}
-            tintColor={colors.primary}
+            tintColor={colors.sage}
           />
         }
       >
@@ -128,14 +120,15 @@ export default function HomeScreen() {
           /* Continue Section - Shows recent conversations */
           <View className="mb-6">
             <View className="px-5 flex-row justify-between items-center mb-3">
-              <Text className="text-section font-inter-semibold" style={{ color: colors.textPrimary }}>
+              <Text className="text-section font-inter-semibold text-text-primary">
                 Continue
               </Text>
-              <Pressable onPress={() => router.push('/(tabs)/history')}>
-                <Text className="text-body-sm font-inter-medium" style={{ color: colors.primary }}>
-                  See all
-                </Text>
-              </Pressable>
+              <Text
+                className="text-body-sm text-sage-600 font-inter-medium"
+                onPress={() => router.push('/(tabs)/history')}
+              >
+                See all
+              </Text>
             </View>
             <ScrollView
               horizontal
@@ -165,18 +158,18 @@ export default function HomeScreen() {
                   <Pressable
                     key={conversation.id}
                     onPress={() => router.push(`/chat/${agent.id}?conversationId=${conversation.id}`)}
-                    className="mr-3 overflow-hidden"
+                    className="mr-3 rounded-2xl overflow-hidden"
                     style={{
-                      backgroundColor: colors.surface,
-                      borderWidth: 1,
-                      borderColor: colors.border,
-                      borderRadius: 12,
+                      backgroundColor: colors.cardBg,
+                      borderWidth: 1.5,
+                      borderColor: colors.cardBorder,
                       width: 170,
-                      shadowColor: '#000',
-                      shadowOffset: { width: 0, height: 1 },
-                      shadowOpacity: 0.08,
-                      shadowRadius: 3,
-                      elevation: 2,
+                      // Enhanced shadow for sharper depth
+                      shadowColor: '#111827',
+                      shadowOffset: { width: 0, height: 4 },
+                      shadowOpacity: 0.12,
+                      shadowRadius: 12,
+                      elevation: 4,
                     }}
                   >
                     {/* Gradient banner at top with letter */}
@@ -199,7 +192,7 @@ export default function HomeScreen() {
                       {isPremium && (
                         <View
                           className="w-6 h-6 rounded-full items-center justify-center"
-                          style={{ backgroundColor: colors.premium }}
+                          style={{ backgroundColor: 'rgba(255,255,255,0.3)' }}
                         >
                           <Text className="text-xs font-inter-bold text-white">
                             P
@@ -230,11 +223,11 @@ export default function HomeScreen() {
                         {hasUnread && (
                           <View
                             className="px-2 py-0.5 rounded mr-2"
-                            style={{ backgroundColor: colors.primaryLight }}
+                            style={{ backgroundColor: '#F0EDE8' }}
                           >
                             <Text
                               className="text-xs font-inter-medium"
-                              style={{ color: colors.primary }}
+                              style={{ color: colors.textSecondary }}
                             >
                               Unread
                             </Text>
@@ -242,7 +235,7 @@ export default function HomeScreen() {
                         )}
                         <Text
                           className="text-caption"
-                          style={{ color: colors.textTertiary }}
+                          style={{ color: colors.textMuted }}
                         >
                           {timeAgo}
                         </Text>
@@ -261,14 +254,15 @@ export default function HomeScreen() {
         {/* Categories */}
         <View className="mb-6">
           <View className="px-5 flex-row justify-between items-center mb-3">
-            <Text className="text-section font-inter-semibold" style={{ color: colors.textPrimary }}>
+            <Text className="text-section font-inter-semibold text-text-primary">
               Categories
             </Text>
-            <Pressable onPress={() => router.push('/explore')}>
-              <Text className="text-body font-inter-bold" style={{ color: colors.primary }}>
-                {'>>'}
-              </Text>
-            </Pressable>
+            <Text
+              className="text-body font-inter-bold text-sage-600"
+              onPress={() => router.push('/explore')}
+            >
+              {'>>'}
+            </Text>
           </View>
           <ScrollView
             horizontal
@@ -289,13 +283,13 @@ export default function HomeScreen() {
         {/* Recommended for you (renamed from Featured Coaches) */}
         <View className="px-5 pb-4">
           <View className="flex-row justify-between items-center mb-3">
-            <Text className="text-section font-inter-semibold" style={{ color: colors.textPrimary }}>
+            <Text className="text-section font-inter-semibold text-text-primary">
               Recommended for you
             </Text>
           </View>
           {isLoadingFeatured ? (
             <View className="py-8 items-center">
-              <ActivityIndicator color={colors.primary} />
+              <ActivityIndicator color={colors.sage} />
             </View>
           ) : (
             <View className="flex-row flex-wrap" style={{ marginHorizontal: -6 }}>
@@ -311,23 +305,24 @@ export default function HomeScreen() {
         {/* Add Your Coach Footer */}
         <Pressable
           onPress={() => router.push('/explore')}
-          className="mx-5 mb-8 py-4 px-4 flex-row items-center"
+          className="mx-5 mb-8 py-4 px-4 flex-row items-center rounded-xl"
           style={{
-            backgroundColor: colors.surface,
-            borderWidth: 1,
-            borderColor: colors.border,
-            borderRadius: 12,
-            shadowColor: '#000',
-            shadowOffset: { width: 0, height: 1 },
+            backgroundColor: colors.cardBg,
+            borderWidth: 1.5,
+            borderColor: colors.cardBorder,
+            // Enhanced shadow
+            shadowColor: '#111827',
+            shadowOffset: { width: 0, height: 3 },
             shadowOpacity: 0.08,
-            shadowRadius: 3,
+            shadowRadius: 10,
+            elevation: 3,
           }}
         >
           <View
             className="w-8 h-8 rounded-full items-center justify-center mr-3"
-            style={{ backgroundColor: colors.primaryLight }}
+            style={{ backgroundColor: colors.sageLight }}
           >
-            <Text className="text-body-sm" style={{ color: colors.primary }}>🏠</Text>
+            <Text className="text-body-sm" style={{ color: colors.sageDark }}>🏠</Text>
           </View>
           <Text
             className="flex-1 font-inter-medium text-body"
@@ -337,7 +332,7 @@ export default function HomeScreen() {
           </Text>
           <Text
             className="text-body font-inter-medium"
-            style={{ color: colors.primary }}
+            style={{ color: colors.sageDark }}
           >
             {'>'}
           </Text>
