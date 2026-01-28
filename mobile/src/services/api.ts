@@ -237,6 +237,18 @@ export async function updateUserContext(context: UserContext): Promise<{ context
   });
 }
 
+export async function completeOnboarding(): Promise<{ user: User }> {
+  return apiFetch('/users/me/complete-onboarding', {
+    method: 'POST',
+  });
+}
+
+export async function dismissContextNudge(): Promise<{ success: boolean }> {
+  return apiFetch('/users/me/dismiss-context-nudge', {
+    method: 'POST',
+  });
+}
+
 export async function linkRevenueCat(revenueCatId: string): Promise<{ user: User }> {
   return apiFetch('/users/me/revenuecat', {
     method: 'POST',

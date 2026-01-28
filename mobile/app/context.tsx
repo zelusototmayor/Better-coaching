@@ -68,14 +68,16 @@ export default function ContextScreen() {
   });
 
   useEffect(() => {
-    if (user?.personal_context) {
+    // Auth store uses 'context' field (camelCase from backend)
+    const userContext = (user as any)?.context;
+    if (userContext) {
       setContext({
-        name: user.personal_context.name || '',
-        about: user.personal_context.about || '',
-        values: user.personal_context.values || [],
-        goals: user.personal_context.goals || '',
-        challenges: user.personal_context.challenges || '',
-        additional: user.personal_context.additional || '',
+        name: userContext.name || '',
+        about: userContext.about || '',
+        values: userContext.values || [],
+        goals: userContext.goals || '',
+        challenges: userContext.challenges || '',
+        additional: userContext.additional || '',
       });
     }
   }, [user]);

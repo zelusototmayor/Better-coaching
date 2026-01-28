@@ -30,6 +30,9 @@ router.get('/me', authenticate, async (req: Request, res: Response) => {
         name: true,
         avatarUrl: true,
         context: true,
+        hasCompletedOnboarding: true,
+        contextLastUpdatedAt: true,
+        contextNudgeDismissedAt: true,
         subscriptionTier: true,
         subscriptionExpiry: true,
         createdAt: true,
@@ -131,7 +134,10 @@ router.patch('/me/context', authenticate, async (req: Request, res: Response) =>
 
     const user = await prisma.user.update({
       where: { id: userId },
-      data: { context: validContext as any },
+      data: {
+        context: validContext as any,
+        contextLastUpdatedAt: new Date(),
+      },
       select: { context: true },
     });
 
@@ -139,6 +145,59 @@ router.patch('/me/context', authenticate, async (req: Request, res: Response) =>
   } catch (error) {
     console.error('Error updating context:', error);
     res.status(500).json({ error: 'Failed to update context' });
+  }
+});
+
+/**
+ * POST /users/me/complete-onboarding - Mark onboarding as complete
+ */
+router.post('/me/complete-onboarding', authenticate, async (req: Request, res: Response) => {
+  try {
+    const userId = req.userId!;
+
+    const user = await prisma.user.update({
+      where: { id: userId },
+      data: {
+        hasCompletedOnboarding: true,
+        contextLastUpdatedAt: new Date(),
+      },
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        avatarUrl: true,
+        context: true,
+        hasCompletedOnboarding: true,
+        subscriptionTier: true,
+        subscriptionExpiry: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
+
+    res.json({ user });
+  } catch (error) {
+    console.error('Error completing onboarding:', error);
+    res.status(500).json({ error: 'Failed to complete onboarding' });
+  }
+});
+
+/**
+ * POST /users/me/dismiss-context-nudge - Dismiss the context refresh nudge
+ */
+router.post('/me/dismiss-context-nudge', authenticate, async (req: Request, res: Response) => {
+  try {
+    const userId = req.userId!;
+
+    await prisma.user.update({
+      where: { id: userId },
+      data: { contextNudgeDismissedAt: new Date() },
+    });
+
+    res.json({ success: true });
+  } catch (error) {
+    console.error('Error dismissing nudge:', error);
+    res.status(500).json({ error: 'Failed to dismiss nudge' });
   }
 });
 

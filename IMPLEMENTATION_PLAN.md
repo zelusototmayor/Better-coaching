@@ -7,7 +7,7 @@
 
 | Phase | Feature | Est. Time | Status |
 |-------|---------|-----------|--------|
-| 1A | User Context Onboarding | 2-3 days | 🔲 Not Started |
+| 1A | User Context Onboarding | 2-3 days | 🔄 In Progress |
 | 1B | Structured Assessments | 3-5 days | 🔲 Not Started |
 | 2A | TTS Voice Output | 3-4 days | 🔲 Not Started |
 | 2B | Push Notifications | 5-7 days | 🔲 Not Started |
@@ -26,13 +26,13 @@
 |----|------|--------|-------|
 | M01 | Add `hasCompletedOnboarding` to User schema | ✅ | Prisma migration |
 | M02 | Add `contextLastUpdatedAt` field to User | ✅ | Same migration as M01 |
-| M03 | Create onboarding wizard layout with steps | 🔲 | `/mobile/app/(welcome)/onboarding.tsx` |
-| M04 | Create onboarding step 1: Name input | 🔲 | Reuse patterns from context.tsx |
-| M05 | Create onboarding step 2: About textarea | 🔲 | |
-| M06 | Create onboarding step 3: Values chip selection | 🔲 | Copy from context.tsx |
-| M07 | Create onboarding step 4: Goals textarea | 🔲 | |
-| M08 | Create onboarding step 5: Challenges textarea | 🔲 | |
-| M09 | Integrate onboarding completion - save context | 🔲 | Call PATCH /users/me/context |
+| M03 | Create onboarding wizard layout with steps | ✅ | `/mobile/app/(welcome)/onboarding.tsx` |
+| M04 | Create onboarding step 1: Name input | ✅ | Reuse patterns from context.tsx |
+| M05 | Create onboarding step 2: About textarea | ✅ | |
+| M06 | Create onboarding step 3: Values chip selection | ✅ | Copy from context.tsx |
+| M07 | Create onboarding step 4: Goals textarea | ✅ | |
+| M08 | Create onboarding step 5: Challenges textarea | ✅ | |
+| M09 | Integrate onboarding completion - save context | ✅ | Call PATCH /users/me/context |
 | M10 | Redirect new users to onboarding in _layout.tsx | 🔲 | Check hasCompletedOnboarding |
 | M11 | Create ContextRefreshBanner component | 🔲 | For home screen |
 | M12 | Add ContextRefreshBanner to home screen | 🔲 | Show if context > 30 days old |

@@ -14,6 +14,9 @@ export interface User {
   name?: string;
   avatar_url?: string;
   personal_context?: UserContext;
+  has_completed_onboarding?: boolean;
+  context_last_updated_at?: string;
+  context_nudge_dismissed_at?: string;
   is_creator: boolean;
   revenuecat_id?: string;
   created_at: string;
