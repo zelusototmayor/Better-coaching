@@ -61,14 +61,14 @@
 | A09 | Implement DELETE assessment endpoint | ✅ | |
 | A10 | Implement POST /assessments/:id/responses | ✅ | Save user answers |
 | A11 | Implement GET /users/me/assessment-responses | ✅ | History |
-| A12 | Create mobile AssessmentModal component | 🔲 | `/mobile/src/components/AssessmentModal.tsx` |
-| A13 | Create ScaleQuestion component (1-10 slider) | 🔲 | Uses @react-native-community/slider |
-| A14 | Create MultipleChoiceQuestion component | 🔲 | |
-| A15 | Create OpenTextQuestion component | 🔲 | |
-| A16 | Integrate AssessmentModal into chat screen | 🔲 | Trigger on first message |
+| A12 | Create mobile AssessmentModal component | ✅ | `/mobile/src/components/AssessmentModal.tsx` |
+| A13 | Create ScaleQuestion component (1-10 slider) | ✅ | Uses @react-native-community/slider |
+| A14 | Create MultipleChoiceQuestion component | ✅ | |
+| A15 | Create OpenTextQuestion component | ✅ | |
+| A16 | Integrate AssessmentModal into chat screen | ✅ | Trigger on first message |
 | A17 | Add assessment step to creator wizard | 🔲 | New screen |
 | A18 | Extend buildSystemPrompt() with assessment results | 🔲 | In llm.ts |
-| A19 | Add mobile types for assessments | 🔲 | `/mobile/src/types/index.ts` |
+| A19 | Add mobile types for assessments | ✅ | `/mobile/src/types/index.ts` |
 
 **Validation:** Create coach with assessment → user chats → sees assessment → completes → coach references results
 

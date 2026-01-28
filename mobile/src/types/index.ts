@@ -8,6 +8,42 @@ export interface UserContext {
   additional?: string;
 }
 
+// ============================================
+// ASSESSMENT TYPES
+// ============================================
+
+export type AssessmentQuestionType = 'scale_1_10' | 'multiple_choice' | 'open_text';
+export type AssessmentTriggerType = 'first_message' | 'on_demand' | 'scheduled';
+
+export interface AssessmentQuestion {
+  id: string;
+  text: string;
+  type: AssessmentQuestionType;
+  options?: string[];
+  category?: string;
+  required?: boolean;
+}
+
+export interface AssessmentConfig {
+  id: string;
+  name: string;
+  description?: string;
+  triggerType: AssessmentTriggerType;
+  questions: AssessmentQuestion[];
+}
+
+export interface AssessmentResponse {
+  id: string;
+  assessmentId: string;
+  assessmentName: string;
+  agentId: string;
+  agentName: string;
+  agentAvatarUrl?: string;
+  conversationId?: string;
+  answers: Record<string, string | number>;
+  completedAt: string;
+}
+
 export interface User {
   id: string;
   email: string;

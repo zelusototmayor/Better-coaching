@@ -22,7 +22,8 @@ import * as api from '../../src/services/api';
 import { InfoIcon, XIcon, ChevronLeftIcon } from '../../src/components/ui/Icons';
 import { TierBadge, Badge } from '../../src/components/ui/Badge';
 import { StarRating, SessionCount } from '../../src/components/ui/Rating';
-import type { Message, Agent } from '../../src/types';
+import { AssessmentModal } from '../../src/components/assessments';
+import type { Message, Agent, AssessmentConfig } from '../../src/types';
 
 // ═══════════════════════════════════════════════════════════════════════════
 // UI DESIGN SPEC V2 - SHARPER AESTHETIC
@@ -414,6 +415,12 @@ export default function ChatScreen() {
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [hasUserSentMessage, setHasUserSentMessage] = useState(!!initialConvId);
 
+  // Assessment state
+  const [pendingAssessment, setPendingAssessment] = useState<AssessmentConfig | null>(null);
+  const [showAssessmentModal, setShowAssessmentModal] = useState(false);
+  const [isSubmittingAssessment, setIsSubmittingAssessment] = useState(false);
+  const [pendingMessageAfterAssessment, setPendingMessageAfterAssessment] = useState<string | null>(null);
+
   const {
     messages,
     isStreaming,
@@ -445,6 +452,22 @@ export default function ChatScreen() {
       // Load suggestions (conversation starters)
       const { suggestions: starters } = await api.getSuggestions(agentId!);
       setSuggestions(starters);
+
+      // Check for first_message assessments (only for new conversations)
+      if (!initialConvId) {
+        try {
+          const { assessments } = await api.getAgentAssessments(agentId!);
+          const firstMessageAssessment = assessments.find(
+            (a) => a.triggerType === 'first_message'
+          );
+          if (firstMessageAssessment) {
+            setPendingAssessment(firstMessageAssessment);
+          }
+        } catch (e) {
+          // Ignore assessment fetch errors
+          console.log('No assessments or error fetching:', e);
+        }
+      }
 
       // Load existing conversation if we have an ID
       if (initialConvId) {
@@ -483,6 +506,15 @@ export default function ChatScreen() {
           },
         ]
       );
+      return;
+    }
+
+    // Check if there's a pending assessment for first message
+    if (pendingAssessment && !conversationId) {
+      // Store the message to send after assessment
+      setPendingMessageAfterAssessment(text);
+      setShowAssessmentModal(true);
+      setInput('');
       return;
     }
 
@@ -696,6 +728,52 @@ export default function ChatScreen() {
         onClose={() => setShowInfoModal(false)}
         agent={agent}
       />
+
+      {/* Assessment Modal */}
+      {pendingAssessment && (
+        <AssessmentModal
+          visible={showAssessmentModal}
+          assessment={pendingAssessment}
+          onClose={() => {
+            setShowAssessmentModal(false);
+            setPendingMessageAfterAssessment(null);
+          }}
+          onSubmit={async (answers) => {
+            setIsSubmittingAssessment(true);
+            try {
+              // Submit assessment
+              await api.submitAssessmentResponse(
+                pendingAssessment.id,
+                agentId!,
+                answers,
+                conversationId
+              );
+
+              // Clear assessment state
+              setShowAssessmentModal(false);
+              setPendingAssessment(null);
+
+              // Send the pending message if any
+              if (pendingMessageAfterAssessment) {
+                setHasUserSentMessage(true);
+                const newConvId = await sendMessage(
+                  agentId!,
+                  pendingMessageAfterAssessment,
+                  conversationId
+                );
+                setConversationId(newConvId);
+                setPendingMessageAfterAssessment(null);
+              }
+            } catch (error) {
+              console.error('Error submitting assessment:', error);
+              Alert.alert('Error', 'Failed to submit assessment. Please try again.');
+            } finally {
+              setIsSubmittingAssessment(false);
+            }
+          }}
+          isSubmitting={isSubmittingAssessment}
+        />
+      )}
     </>
   );
 }

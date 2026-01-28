@@ -249,6 +249,43 @@ export async function dismissContextNudge(): Promise<{ success: boolean }> {
   });
 }
 
+// ============================================
+// ASSESSMENTS API
+// ============================================
+
+import type { AssessmentConfig, AssessmentResponse } from '../types';
+
+export async function getAgentAssessments(agentId: string): Promise<{
+  assessments: AssessmentConfig[];
+}> {
+  return apiFetch(`/agents/${agentId}/assessments`);
+}
+
+export async function submitAssessmentResponse(
+  assessmentId: string,
+  agentId: string,
+  answers: Record<string, string | number>,
+  conversationId?: string
+): Promise<{ response: any }> {
+  return apiFetch(`/assessments/${assessmentId}/responses`, {
+    method: 'POST',
+    body: JSON.stringify({
+      agentId,
+      conversationId,
+      answers,
+    }),
+  });
+}
+
+export async function getMyAssessmentResponses(agentId?: string): Promise<{
+  responses: AssessmentResponse[];
+}> {
+  const params = new URLSearchParams();
+  if (agentId) params.set('agentId', agentId);
+  const query = params.toString();
+  return apiFetch(`/users/me/assessment-responses${query ? `?${query}` : ''}`);
+}
+
 export async function linkRevenueCat(revenueCatId: string): Promise<{ user: User }> {
   return apiFetch('/users/me/revenuecat', {
     method: 'POST',
