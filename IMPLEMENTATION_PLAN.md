@@ -54,13 +54,13 @@
 | A02 | Add Zod validation schema for assessments | ✅ | |
 | A03 | Create Prisma migration for assessments | ✅ | Agent.assessmentConfigs, AssessmentResponse |
 | A04 | Seed example "Wheel of Life" assessment | ✅ | prisma/seed.ts |
-| A05 | Create assessments routes file | 🔲 | `/backend/src/routes/assessments.ts` |
-| A06 | Implement GET /agents/:id/assessments | 🔲 | |
-| A07 | Implement POST /agents/:id/assessments | 🔲 | Creator only |
-| A08 | Implement PUT assessment endpoint | 🔲 | |
-| A09 | Implement DELETE assessment endpoint | 🔲 | |
-| A10 | Implement POST /assessments/:id/responses | 🔲 | Save user answers |
-| A11 | Implement GET /users/me/assessment-responses | 🔲 | History |
+| A05 | Create assessments routes file | ✅ | `/backend/src/routes/assessments.ts` |
+| A06 | Implement GET /agents/:id/assessments | ✅ | |
+| A07 | Implement POST /agents/:id/assessments | ✅ | Creator only |
+| A08 | Implement PUT assessment endpoint | ✅ | |
+| A09 | Implement DELETE assessment endpoint | ✅ | |
+| A10 | Implement POST /assessments/:id/responses | ✅ | Save user answers |
+| A11 | Implement GET /users/me/assessment-responses | ✅ | History |
 | A12 | Create mobile AssessmentModal component | 🔲 | `/mobile/src/components/AssessmentModal.tsx` |
 | A13 | Create ScaleQuestion component (1-10 slider) | 🔲 | Uses @react-native-community/slider |
 | A14 | Create MultipleChoiceQuestion component | 🔲 | |

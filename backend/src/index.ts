@@ -16,6 +16,7 @@ import webhooksRouter from './routes/webhooks';
 import integrationsRouter from './routes/integrations';
 import knowledgeRouter from './routes/knowledge';
 import knowledgeSimpleRouter from './routes/knowledgeSimple';
+import assessmentsRouter from './routes/assessments';
 import { prisma } from './services/database';
 
 const app = express();
@@ -101,6 +102,7 @@ app.use('/api/webhooks', webhooksRouter);
 app.use('/api/integrations', integrationsRouter);
 app.use('/api/knowledge', knowledgeRouter);
 app.use('/api/knowledge-simple', knowledgeSimpleRouter);
+app.use('/api', assessmentsRouter);
 
 // 404 handler
 app.use((req, res) => {
