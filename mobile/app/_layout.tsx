@@ -5,9 +5,14 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useFonts, Inter_400Regular, Inter_500Medium, Inter_600SemiBold, Inter_700Bold } from '@expo-google-fonts/inter';
 import * as SplashScreen from 'expo-splash-screen';
+import { Mixpanel } from 'mixpanel-react-native';
 import { useAuthStore } from '../src/stores/auth';
 import VideoSplash from '../src/components/VideoSplash';
 import '../global.css';
+
+// Initialize Mixpanel
+const MIXPANEL_TOKEN = process.env.EXPO_PUBLIC_MIXPANEL_TOKEN || '';
+export const mixpanel = new Mixpanel(MIXPANEL_TOKEN, true);
 
 // Keep splash screen visible while loading fonts
 SplashScreen.preventAutoHideAsync();
@@ -32,6 +37,15 @@ export default function RootLayout() {
 
   useEffect(() => {
     initialize();
+  }, []);
+
+  // Initialize Mixpanel
+  useEffect(() => {
+    if (MIXPANEL_TOKEN) {
+      mixpanel.init().then(() => {
+        mixpanel.track('App Opened');
+      }).catch(console.warn);
+    }
   }, []);
 
   // Hide splash screen when fonts and auth are ready

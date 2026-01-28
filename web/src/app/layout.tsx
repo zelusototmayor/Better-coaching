@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import { MixpanelProvider } from '@/components/MixpanelProvider';
 import './globals.css';
 
 const inter = Inter({
@@ -34,7 +35,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} min-h-screen`}>
-        {children}
+        <MixpanelProvider>
+          {children}
+        </MixpanelProvider>
       </body>
     </html>
   );
