@@ -24,9 +24,9 @@ import '../global.css';
 const ONBOARDING_DISMISSED_KEY = 'onboarding_prompt_dismissed';
 const NOTIFICATION_PROMPT_SHOWN_KEY = 'notification_prompt_shown';
 
-// Initialize Mixpanel
-const MIXPANEL_TOKEN = process.env.EXPO_PUBLIC_MIXPANEL_TOKEN || '';
-export const mixpanel = new Mixpanel(MIXPANEL_TOKEN, true);
+// Initialize Mixpanel (only if token is configured)
+const MIXPANEL_TOKEN = process.env.EXPO_PUBLIC_MIXPANEL_TOKEN;
+export const mixpanel = MIXPANEL_TOKEN ? new Mixpanel(MIXPANEL_TOKEN, true) : null;
 
 // Keep splash screen visible while loading fonts
 SplashScreen.preventAutoHideAsync();
@@ -62,7 +62,7 @@ export default function RootLayout() {
 
   // Initialize Mixpanel
   useEffect(() => {
-    if (MIXPANEL_TOKEN) {
+    if (mixpanel) {
       mixpanel.init().then(() => {
         mixpanel.track('App Opened');
       }).catch(console.warn);
