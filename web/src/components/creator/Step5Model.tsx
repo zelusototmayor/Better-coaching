@@ -7,17 +7,13 @@ import {
   DEFAULT_MODELS,
   LLMProvider,
   ExampleConversation,
+  AVAILABLE_VOICES,
 } from '@/lib/creatorStore';
-import { agentsApi } from '@/lib/api';
-import { useAuthStore } from '@/lib/store';
 
 export function Step5Model() {
-  const { accessToken } = useAuthStore();
   const {
     draft,
     setDraft,
-    supportedModels,
-    setSupportedModels,
     generateSystemPrompt,
   } = useCreatorStore();
   const { modelConfig } = draft;
@@ -26,18 +22,6 @@ export function Step5Model() {
   const [showExampleModal, setShowExampleModal] = useState(false);
   const [newExample, setNewExample] = useState<ExampleConversation>({ user: '', assistant: '' });
 
-  useEffect(() => {
-    async function fetchModels() {
-      if (!accessToken) return;
-      try {
-        const { models } = await agentsApi.getSupportedModels(accessToken);
-        setSupportedModels(models);
-      } catch (error) {
-        console.error('Error fetching supported models:', error);
-      }
-    }
-    fetchModels();
-  }, [accessToken, setSupportedModels]);
 
   // Generate prompt if empty
   useEffect(() => {
@@ -95,7 +79,7 @@ export function Step5Model() {
     setDraft({ conversationStarters: starters });
   };
 
-  const providerModels = supportedModels[modelConfig.provider] || [];
+  const selectedVoice = AVAILABLE_VOICES.find((v) => v.id === draft.voiceId) || AVAILABLE_VOICES[0];
 
   return (
     <div className="space-y-6">
@@ -121,10 +105,9 @@ export function Step5Model() {
             >
               <div className="flex-1">
                 <p className="font-medium text-gray-900 dark:text-white">
-                  {provider.name}
-                  <span className="text-gray-500 dark:text-gray-400 font-normal"> by {provider.company}</span>
+                  {provider.name} (Latest)
                 </p>
-                <p className="text-sm text-gray-500 dark:text-gray-400">{provider.description}</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">by {provider.company}</p>
               </div>
               {modelConfig.provider === provider.id && (
                 <div className="bg-sky-600 w-6 h-6 rounded-full flex items-center justify-center">
@@ -136,29 +119,28 @@ export function Step5Model() {
             </button>
           ))}
         </div>
+      </div>
 
-        {/* Model variant selection */}
-        {providerModels.length > 1 && (
-          <div className="mt-3">
-            <p className="text-xs text-gray-500 dark:text-gray-400 mb-2">Model variant:</p>
-            <div className="flex flex-wrap gap-2">
-              {providerModels.map((model) => (
-                <button
-                  key={model.id}
-                  onClick={() => updateModelConfig({ model: model.id })}
-                  className={`px-3 py-2 rounded-lg text-sm ${
-                    modelConfig.model === model.id
-                      ? 'bg-sky-600 text-white'
-                      : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
-                  }`}
-                >
-                  {model.name}
-                  {model.recommended && ' (Recommended)'}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
+      {/* Voice Selection */}
+      <div>
+        <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">
+          Coach Voice
+        </label>
+        <p className="text-xs text-gray-500 dark:text-gray-400 mb-3">
+          Choose a voice for your coach's spoken responses
+        </p>
+
+        <select
+          value={draft.voiceId}
+          onChange={(e) => setDraft({ voiceId: e.target.value })}
+          className="input w-full"
+        >
+          {AVAILABLE_VOICES.map((voice) => (
+            <option key={voice.id} value={voice.id}>
+              {voice.name} - {voice.description}
+            </option>
+          ))}
+        </select>
       </div>
 
       {/* Temperature Slider */}

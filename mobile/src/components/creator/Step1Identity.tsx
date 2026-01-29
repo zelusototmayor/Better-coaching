@@ -99,7 +99,11 @@ export function Step1Identity() {
   };
 
   return (
-    <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
+    <ScrollView
+      className="flex-1"
+      showsVerticalScrollIndicator={false}
+      contentContainerStyle={{ paddingBottom: 100 }}
+    >
       <View className="px-5 py-4">
         {/* Avatar Selection */}
         <View className="items-center mb-6">

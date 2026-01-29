@@ -136,6 +136,7 @@ export default function NewAgentPage() {
           (e) => e.user && e.assistant
         ),
         knowledge_context: knowledgeContext,
+        voice_id: draft.voiceId,
       };
 
       let result;

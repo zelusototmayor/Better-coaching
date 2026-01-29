@@ -62,6 +62,9 @@ export interface AgentDraft {
   conversationStarters: string[];
   exampleConversations: ExampleConversation[];
 
+  // Voice
+  voiceId: string;
+
   // Meta
   isPublished?: boolean;
 }
@@ -92,6 +95,7 @@ const DEFAULT_DRAFT: AgentDraft = {
   greetingMessage: '',
   conversationStarters: [],
   exampleConversations: [],
+  voiceId: '21m00Tcm4TlvDq8ikWAM', // Rachel - default
 };
 
 interface CreatorState {
@@ -331,7 +335,7 @@ export const PROVIDERS = [
   },
   {
     id: 'openai' as LLMProvider,
-    name: 'GPT-4',
+    name: 'GPT',
     company: 'OpenAI',
     description: 'Versatile and widely capable',
   },
@@ -344,9 +348,9 @@ export const PROVIDERS = [
 ];
 
 export const DEFAULT_MODELS: Record<LLMProvider, string> = {
-  anthropic: 'claude-3-5-sonnet-20241022',
-  openai: 'gpt-4o',
-  google: 'gemini-1.5-pro',
+  anthropic: 'claude-4.5-sonnet-20241022',
+  openai: 'gpt-5.2',
+  google: 'gemini-2.5-flash',
 };
 
 export const EXPERTISE_TEMPLATES: Record<string, string> = {
@@ -424,3 +428,14 @@ export const BOUNDARY_TEMPLATES: Record<string, string> = {
 - Replace professional tutoring
 - Make educational decisions`,
 };
+
+export const AVAILABLE_VOICES = [
+  { id: '21m00Tcm4TlvDq8ikWAM', name: 'Rachel', description: 'Calm, warm female voice' },
+  { id: 'AZnzlk1XvdvUeBnXmlld', name: 'Domi', description: 'Strong, confident female voice' },
+  { id: 'EXAVITQu4vr4xnSDxMaL', name: 'Bella', description: 'Soft, friendly female voice' },
+  { id: 'ErXwobaYiN019PkySvjV', name: 'Antoni', description: 'Well-rounded male voice' },
+  { id: 'TxGEqnHWrfWFTfGW9XjX', name: 'Josh', description: 'Deep, resonant male voice' },
+  { id: 'VR6AewLTigWG4xSOukaG', name: 'Arnold', description: 'Crisp, clear male voice' },
+  { id: 'pNInz6obpgDQGcFmaJgB', name: 'Adam', description: 'Deep, authoritative male voice' },
+  { id: 'yoZ06aMxZJJ28mfd3POQ', name: 'Sam', description: 'Raspy, dynamic male voice' },
+];

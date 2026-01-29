@@ -10,7 +10,7 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
-import { useCreatorStore } from '../../stores/creator';
+import { useCreatorStore, AVAILABLE_VOICES } from '../../stores/creator';
 
 // Simulated message type for preview
 interface PreviewMessage {
@@ -43,7 +43,7 @@ const TEST_PROMPTS = [
   'Give me a tip to get started',
 ];
 
-export function Step5Preview() {
+export function Step6Preview() {
   const { draft } = useCreatorStore();
   const flatListRef = useRef<FlatList>(null);
 
@@ -51,6 +51,8 @@ export function Step5Preview() {
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [showInfo, setShowInfo] = useState(true);
+
+  const selectedVoice = AVAILABLE_VOICES.find((v) => v.id === draft.voiceId);
 
   // Initialize with greeting
   useEffect(() => {
@@ -208,7 +210,7 @@ export function Step5Preview() {
           data={messages}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => <PreviewMessageBubble message={item} />}
-          contentContainerStyle={{ padding: 16 }}
+          contentContainerStyle={{ padding: 16, paddingBottom: 100 }}
           showsVerticalScrollIndicator={false}
           ListEmptyComponent={
             <View className="items-center py-8">
@@ -301,6 +303,18 @@ export function Step5Preview() {
                 <Text className="text-xs text-gray-600 capitalize">{draft.category}</Text>
               </View>
             )}
+            {selectedVoice && (
+              <View className="bg-white rounded-lg px-2 py-1 mr-2 mb-1">
+                <Text className="text-xs text-gray-600">Voice: {selectedVoice.name}</Text>
+              </View>
+            )}
+            {draft.knowledgeContext.length > 0 && (
+              <View className="bg-white rounded-lg px-2 py-1 mr-2 mb-1">
+                <Text className="text-xs text-gray-600">
+                  {draft.knowledgeContext.length} knowledge doc{draft.knowledgeContext.length !== 1 ? 's' : ''}
+                </Text>
+              </View>
+            )}
           </View>
         </View>
       </View>
@@ -311,6 +325,6 @@ export function Step5Preview() {
 // Helper for provider names
 const PROVIDERS = [
   { id: 'anthropic', name: 'Claude' },
-  { id: 'openai', name: 'GPT-4' },
+  { id: 'openai', name: 'GPT' },
   { id: 'google', name: 'Gemini' },
 ];

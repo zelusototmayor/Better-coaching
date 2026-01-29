@@ -47,13 +47,23 @@ export async function transcribeAudio(
 ): Promise<TranscriptionResult> {
   const client = getOpenAIClient();
 
-  // Create a File-like object from the buffer using Uint8Array
-  const uint8Array = new Uint8Array(audioBuffer);
-  const file = new File(
-    [uint8Array],
-    options.filename || 'audio.webm',
-    { type: 'audio/webm' }
-  );
+  // Determine the mime type from filename
+  // Note: Whisper supports mp3, mp4, mpeg, mpga, m4a, wav, webm
+  const filename = options.filename || 'audio.m4a';
+  let mimeType = 'audio/mp4'; // Default to mp4 which is widely supported
+  if (filename.endsWith('.mp3')) mimeType = 'audio/mpeg';
+  else if (filename.endsWith('.wav')) mimeType = 'audio/wav';
+  else if (filename.endsWith('.m4a')) mimeType = 'audio/mp4';
+  else if (filename.endsWith('.mp4')) mimeType = 'audio/mp4';
+  else if (filename.endsWith('.ogg')) mimeType = 'audio/ogg';
+  else if (filename.endsWith('.flac')) mimeType = 'audio/flac';
+  else if (filename.endsWith('.webm')) mimeType = 'audio/webm';
+  else if (filename.endsWith('.caf')) mimeType = 'audio/mp4'; // iOS CAF - treat as mp4
+  else if (filename.endsWith('.3gp')) mimeType = 'audio/mp4'; // Android 3gp - treat as mp4
+  else if (filename.endsWith('.aac')) mimeType = 'audio/mp4'; // AAC - treat as mp4
+
+  // Use toFile helper from OpenAI SDK for proper Node.js compatibility
+  const file = await OpenAI.toFile(audioBuffer, filename, { type: mimeType });
 
   const response = await client.audio.transcriptions.create({
     file,

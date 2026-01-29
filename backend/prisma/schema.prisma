@@ -102,6 +102,9 @@ model Agent {
   // Stores extracted text from Notion public pages and uploaded documents
   knowledgeContext     Json     @default("[]") @map("knowledge_context")
 
+  // Voice configuration (ElevenLabs voice ID)
+  voiceId              String?  @map("voice_id")
+
   // Assessment configurations (JSON array of AssessmentConfig objects)
   assessmentConfigs    Json     @default("[]") @map("assessment_configs")
 

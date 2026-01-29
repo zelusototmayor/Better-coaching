@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { View, Text, Pressable, ActivityIndicator } from 'react-native';
 import { Audio } from 'expo-av';
 import * as api from '../services/api';
+import { stripMarkdown } from '../utils/markdown';
 
 const colors = {
   sage: '#6F8F79',
@@ -54,20 +55,31 @@ export function AudioPlayer({ text, agentId, compact = true }: AudioPlayerProps)
     setState('loading');
 
     try {
-      // Request TTS from backend
-      const audioUrl = await api.synthesizeSpeech(text, agentId);
+      // Request TTS from backend (strip markdown so it doesn't read formatting)
+      const cleanText = stripMarkdown(text);
+      const audioUrl = await api.synthesizeSpeech(cleanText, agentId);
 
       // Unload previous sound
       if (soundRef.current) {
         await soundRef.current.unloadAsync();
       }
 
-      // Load and play
+      // Configure audio mode for loud playback
+      await Audio.setAudioModeAsync({
+        allowsRecordingIOS: false,
+        playsInSilentModeIOS: true,
+        staysActiveInBackground: false,
+      });
+
+      // Load and play at full volume
       const { sound } = await Audio.Sound.createAsync(
         { uri: audioUrl },
-        { shouldPlay: true },
+        { shouldPlay: true, volume: 1.0 },
         onPlaybackStatusUpdate
       );
+
+      // Ensure max volume
+      await sound.setVolumeAsync(1.0);
 
       soundRef.current = sound;
       setState('playing');

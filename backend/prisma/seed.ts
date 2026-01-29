@@ -236,7 +236,7 @@ Be direct and strategic in your advice. Ask clarifying questions about their cur
       },
       modelConfig: {
         provider: 'openai',
-        model: 'gpt-4o-mini',
+        model: 'gpt-5.2',
         temperature: 0.6,
       },
       conversationStarters: [

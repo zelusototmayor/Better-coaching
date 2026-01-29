@@ -109,11 +109,10 @@ router.post('/synthesize', authenticate, async (req: Request, res: Response) => 
     if (!resolvedVoiceId && agentId) {
       const agent = await prisma.agent.findUnique({
         where: { id: agentId },
-        select: { personalityConfig: true },
+        select: { voiceId: true },
       });
 
-      const config = agent?.personalityConfig as any;
-      resolvedVoiceId = config?.voiceId || ELEVENLABS_VOICES.rachel.id;
+      resolvedVoiceId = agent?.voiceId || ELEVENLABS_VOICES.rachel.id;
     }
 
     // Default to Rachel voice

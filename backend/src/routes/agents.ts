@@ -216,6 +216,7 @@ router.post('/', authenticate, async (req: Request, res: Response) => {
       example_conversations,
       conversation_starters,
       knowledge_context,
+      voice_id,
     } = req.body;
 
     // Validate required fields
@@ -254,6 +255,7 @@ router.post('/', authenticate, async (req: Request, res: Response) => {
         exampleConversations: example_conversations || [],
         conversationStarters: conversation_starters || [],
         knowledgeContext: knowledge_context || [],
+        voiceId: voice_id || null,
         isPublished: false,
       },
     });
@@ -299,6 +301,7 @@ router.patch('/:id', authenticate, async (req: Request, res: Response) => {
       example_conversations,
       conversation_starters,
       knowledge_context,
+      voice_id,
       is_published,
     } = req.body;
 
@@ -317,6 +320,7 @@ router.patch('/:id', authenticate, async (req: Request, res: Response) => {
     if (example_conversations !== undefined) updateData.exampleConversations = example_conversations;
     if (conversation_starters !== undefined) updateData.conversationStarters = conversation_starters;
     if (knowledge_context !== undefined) updateData.knowledgeContext = knowledge_context;
+    if (voice_id !== undefined) updateData.voiceId = voice_id;
     if (is_published !== undefined) updateData.isPublished = is_published;
 
     const agent = await prisma.agent.update({

@@ -9,7 +9,8 @@ import { Step1Identity } from '../../src/components/creator/Step1Identity';
 import { Step2Personality } from '../../src/components/creator/Step2Personality';
 import { Step3Expertise } from '../../src/components/creator/Step3Expertise';
 import { Step4Model } from '../../src/components/creator/Step4Model';
-import { Step5Preview } from '../../src/components/creator/Step5Preview';
+import { Step5VoiceKnowledge } from '../../src/components/creator/Step5VoiceKnowledge';
+import { Step6Preview } from '../../src/components/creator/Step6Preview';
 
 export default function EditCoachScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -67,7 +68,9 @@ export default function EditCoachScreen() {
       case 4:
         return !!draft.greetingMessage && !!draft.modelConfig.model;
       case 5:
-        return true;
+        return true; // Voice & Knowledge has defaults
+      case 6:
+        return true; // Preview step
       default:
         return false;
     }
@@ -145,14 +148,16 @@ export default function EditCoachScreen() {
       case 4:
         return <Step4Model />;
       case 5:
-        return <Step5Preview />;
+        return <Step5VoiceKnowledge />;
+      case 6:
+        return <Step6Preview />;
       default:
         return null;
     }
   };
 
   const getStepTitle = () => {
-    const titles = ['Identity', 'Personality', 'Expertise', 'Model & Settings', 'Preview & Test'];
+    const titles = ['Identity', 'Personality', 'Expertise', 'Model & Settings', 'Voice & Knowledge', 'Preview & Test'];
     return titles[currentStep - 1];
   };
 
@@ -191,7 +196,7 @@ export default function EditCoachScreen() {
         }}
       />
 
-      <SafeAreaView className="flex-1 bg-background-light" edges={['bottom']}>
+      <View className="flex-1 bg-background-light">
         {/* Published Badge */}
         {draft.isPublished && (
           <View className="bg-green-50 px-5 py-2 flex-row items-center justify-center">
@@ -213,15 +218,16 @@ export default function EditCoachScreen() {
         {/* Step Content */}
         <View className="flex-1">{renderStep()}</View>
 
-        {/* Bottom Actions */}
-        <View className="bg-white border-t border-gray-100 px-5 py-4">
+        {/* Bottom Actions - Floating */}
+        <View className="absolute bottom-0 left-0 right-0 px-5 pb-10" pointerEvents="box-none">
           {currentStep < totalSteps ? (
             <TouchableOpacity
               onPress={handleNext}
               disabled={!canProceed()}
-              className={`py-4 rounded-xl items-center ${
+              className={`py-4 rounded-xl items-center shadow-lg ${
                 canProceed() ? 'bg-primary-600' : 'bg-gray-200'
               }`}
+              style={{ elevation: 8 }}
             >
               <Text
                 className={`font-semibold text-base ${
@@ -236,14 +242,16 @@ export default function EditCoachScreen() {
               <TouchableOpacity
                 onPress={handleSave}
                 disabled={isSaving}
-                className="flex-1 py-4 rounded-xl items-center bg-gray-100 mr-2"
+                className="flex-1 py-4 rounded-xl items-center bg-white mr-2 shadow-lg"
+                style={{ elevation: 8 }}
               >
                 <Text className="font-semibold text-gray-700">Save</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={handlePublish}
                 disabled={isPublishing}
-                className="flex-1 py-4 rounded-xl items-center bg-primary-600 ml-2"
+                className="flex-1 py-4 rounded-xl items-center bg-primary-600 ml-2 shadow-lg"
+                style={{ elevation: 8 }}
               >
                 {isPublishing ? (
                   <ActivityIndicator color="#FFFFFF" />
@@ -256,7 +264,7 @@ export default function EditCoachScreen() {
             </View>
           )}
         </View>
-      </SafeAreaView>
+      </View>
     </>
   );
 }

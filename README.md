@@ -14,7 +14,7 @@ Better Coaching democratizes access to coaching by making it easy for anyone to 
 - **1 Free Message**: Try any coach with a free sample message before subscribing
 - **Personal Context**: Add your values, goals, and challenges for personalized coaching
 - **Creator Studio**: Build your own AI coaches with full prompt editing (premium)
-- **Multi-Model Support**: Creators can choose Claude, GPT-4, or Gemini for their coaches
+- **Multi-Model Support**: Creators can choose Claude, GPT, or Gemini for their coaches
 
 ## 🏗 Project Structure
 
@@ -51,7 +51,7 @@ bettercoaching/
 - Node.js + Express + TypeScript
 - PostgreSQL + Prisma ORM
 - JWT Authentication (access + refresh tokens)
-- Multi-LLM support (Claude, GPT-4, Gemini)
+- Multi-LLM support (Claude, GPT, Gemini)
 
 ## 🚀 Quick Start
 

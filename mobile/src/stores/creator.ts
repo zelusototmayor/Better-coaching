@@ -2,6 +2,18 @@ import { create } from 'zustand';
 import * as api from '../services/api';
 import type { Agent, LLMConfig, PersonalityConfig, ExampleConversation } from '../types';
 
+// Available voices for TTS
+export const AVAILABLE_VOICES = [
+  { id: '21m00Tcm4TlvDq8ikWAM', name: 'Rachel', description: 'Calm, warm female voice' },
+  { id: 'AZnzlk1XvdvUeBnXmlld', name: 'Domi', description: 'Strong, confident female voice' },
+  { id: 'EXAVITQu4vr4xnSDxMaL', name: 'Bella', description: 'Soft, friendly female voice' },
+  { id: 'ErXwobaYiN019PkySvjV', name: 'Antoni', description: 'Well-rounded male voice' },
+  { id: 'TxGEqnHWrfWFTfGW9XjX', name: 'Josh', description: 'Deep, resonant male voice' },
+  { id: 'VR6AewLTigWG4xSOukaG', name: 'Arnold', description: 'Crisp, clear male voice' },
+  { id: 'pNInz6obpgDQGcFmaJgB', name: 'Adam', description: 'Deep, authoritative male voice' },
+  { id: 'yoZ06aMxZJJ28mfd3POQ', name: 'Sam', description: 'Raspy, dynamic male voice' },
+];
+
 // Draft agent being created/edited
 export interface AgentDraft {
   // Step 1: Identity
@@ -26,6 +38,10 @@ export interface AgentDraft {
   greetingMessage: string;
   conversationStarters: string[];
   exampleConversations: ExampleConversation[];
+
+  // Voice & Knowledge
+  voiceId: string;
+  knowledgeContext: Array<{ type: string; title: string; content: string }>;
 
   // Meta
   isPublished?: boolean;
@@ -56,6 +72,8 @@ const DEFAULT_DRAFT: AgentDraft = {
   greetingMessage: '',
   conversationStarters: [],
   exampleConversations: [],
+  voiceId: '21m00Tcm4TlvDq8ikWAM', // Rachel - default
+  knowledgeContext: [],
 };
 
 interface CreatorState {
@@ -92,7 +110,7 @@ export const useCreatorStore = create<CreatorState>((set, get) => ({
   draft: { ...DEFAULT_DRAFT },
   editingAgentId: null,
   currentStep: 1,
-  totalSteps: 5,
+  totalSteps: 6,
   isSaving: false,
   isPublishing: false,
   isLoading: false,
@@ -134,6 +152,8 @@ export const useCreatorStore = create<CreatorState>((set, get) => ({
         greetingMessage: agent.greeting_message,
         conversationStarters: agent.conversation_starters || [],
         exampleConversations: agent.example_conversations || [],
+        voiceId: agent.voice_id || DEFAULT_DRAFT.voiceId,
+        knowledgeContext: agent.knowledge_context || [],
         isPublished: agent.is_published,
       };
 
@@ -194,6 +214,8 @@ export const useCreatorStore = create<CreatorState>((set, get) => ({
         example_conversations: draft.exampleConversations.filter(
           (e) => e.user && e.assistant
         ),
+        voice_id: draft.voiceId,
+        knowledge_context: draft.knowledgeContext,
       };
 
       let result;

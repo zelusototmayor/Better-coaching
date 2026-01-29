@@ -25,7 +25,7 @@ interface AgentWithConfig {
 router.post('/message', authenticate, async (req: Request, res: Response) => {
   try {
     const userId = req.userId!;
-    const { agent_id, conversation_id, message } = req.body;
+    const { agent_id, conversation_id, message, voice_mode } = req.body;
 
     if (!agent_id || !message) {
       res.status(400).json({ error: 'Missing agent_id or message' });
@@ -181,8 +181,8 @@ router.post('/message', authenticate, async (req: Request, res: Response) => {
         user_insights_prompt: userInsightsPrompt,
       };
 
-      // Stream the response
-      for await (const chunk of generateCoachResponse(agentForLLM as any, messages, userContext as any, retrievedKnowledge, assessmentResults)) {
+      // Stream the response (pass voice_mode for conversational responses)
+      for await (const chunk of generateCoachResponse(agentForLLM as any, messages, userContext as any, retrievedKnowledge, assessmentResults, voice_mode)) {
         fullResponse += chunk;
         res.write(`data: ${JSON.stringify({ chunk })}\n\n`);
       }

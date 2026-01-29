@@ -7,10 +7,10 @@ interface StepIndicatorProps {
 }
 
 export function StepIndicator({ currentStep, totalSteps, labels }: StepIndicatorProps) {
-  const defaultLabels = ['Identity', 'Personality', 'Expertise', 'Model', 'Preview'];
+  const defaultLabels = ['Identity', 'Style', 'Expertise', 'Model', 'Voice', 'Preview'];
 
   return (
-    <View className="flex-row items-center justify-center py-4 px-2">
+    <View className="flex-row items-center justify-between px-4 py-3">
       {Array.from({ length: totalSteps }).map((_, index) => {
         const step = index + 1;
         const isActive = step === currentStep;
@@ -18,11 +18,11 @@ export function StepIndicator({ currentStep, totalSteps, labels }: StepIndicator
         const label = (labels || defaultLabels)[index];
 
         return (
-          <View key={step} className="flex-row items-center">
-            {/* Step circle */}
-            <View className="items-center">
+          <View key={step} className="flex-row items-center flex-1">
+            {/* Step circle and label */}
+            <View className="items-center flex-1">
               <View
-                className={`w-8 h-8 rounded-full items-center justify-center ${
+                className={`w-6 h-6 rounded-full items-center justify-center ${
                   isActive
                     ? 'bg-primary-600'
                     : isCompleted
@@ -31,10 +31,10 @@ export function StepIndicator({ currentStep, totalSteps, labels }: StepIndicator
                 }`}
               >
                 {isCompleted ? (
-                  <Text className="text-white text-sm">OK</Text>
+                  <Text className="text-white text-xs">✓</Text>
                 ) : (
                   <Text
-                    className={`text-sm font-semibold ${
+                    className={`text-xs font-semibold ${
                       isActive ? 'text-white' : 'text-gray-500'
                     }`}
                   >
@@ -43,7 +43,7 @@ export function StepIndicator({ currentStep, totalSteps, labels }: StepIndicator
                 )}
               </View>
               <Text
-                className={`text-xs mt-1 ${
+                className={`text-[10px] mt-1 ${
                   isActive ? 'text-primary-600 font-medium' : 'text-gray-400'
                 }`}
                 numberOfLines={1}
@@ -51,15 +51,6 @@ export function StepIndicator({ currentStep, totalSteps, labels }: StepIndicator
                 {label}
               </Text>
             </View>
-
-            {/* Connector line */}
-            {step < totalSteps && (
-              <View
-                className={`w-8 h-0.5 mx-1 ${
-                  isCompleted ? 'bg-primary-600' : 'bg-gray-200'
-                }`}
-              />
-            )}
           </View>
         );
       })}

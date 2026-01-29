@@ -110,6 +110,10 @@ export interface Agent {
   model_config?: LLMConfig;
   example_conversations?: ExampleConversation[];
   is_published?: boolean;
+
+  // Voice and knowledge
+  voice_id?: string;
+  knowledge_context?: Array<{ type: string; title: string; content: string }>;
 }
 
 // Category

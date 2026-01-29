@@ -111,7 +111,7 @@ Return an empty array if no clear new insights can be extracted.`;
   try {
     const client = getOpenAIClient();
     const response = await client.chat.completions.create({
-      model: 'gpt-4o-mini', // Fast and cheap for extraction
+      model: 'gpt-5.2', // Fast and cheap for extraction
       temperature: 0.3,
       response_format: { type: 'json_object' },
       messages: [

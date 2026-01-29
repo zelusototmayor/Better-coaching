@@ -111,7 +111,7 @@ export function Step3Expertise() {
   };
 
   return (
-    <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
+    <ScrollView className="flex-1" showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 100 }}>
       <View className="px-5 py-4">
         {/* Expertise */}
         <View className="mb-6">

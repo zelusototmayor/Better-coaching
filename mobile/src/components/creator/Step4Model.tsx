@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -15,43 +15,35 @@ import type { LLMProvider, ExampleConversation } from '../../types';
 const PROVIDERS = [
   {
     id: 'anthropic' as LLMProvider,
-    name: 'Claude',
+    name: 'Claude (Latest)',
     company: 'Anthropic',
-    description: 'Great for nuanced, thoughtful conversations',
   },
   {
     id: 'openai' as LLMProvider,
-    name: 'GPT-4',
+    name: 'GPT (Latest)',
     company: 'OpenAI',
-    description: 'Versatile and widely capable',
   },
   {
     id: 'google' as LLMProvider,
-    name: 'Gemini',
+    name: 'Gemini (Latest)',
     company: 'Google',
-    description: 'Fast and efficient responses',
   },
 ];
 
 // Default models per provider
 const DEFAULT_MODELS: Record<LLMProvider, string> = {
   anthropic: 'claude-sonnet-4-20250514',
-  openai: 'gpt-4o',
-  google: 'gemini-1.5-pro',
+  openai: 'gpt-5.2',
+  google: 'gemini-2.5-flash',
 };
 
 export function Step4Model() {
-  const { draft, setDraft, supportedModels, fetchSupportedModels, generateSystemPrompt } =
-    useCreatorStore();
+  const { draft, setDraft, generateSystemPrompt } = useCreatorStore();
   const { modelConfig } = draft;
 
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [showExampleModal, setShowExampleModal] = useState(false);
   const [newExample, setNewExample] = useState<ExampleConversation>({ user: '', assistant: '' });
-
-  useEffect(() => {
-    fetchSupportedModels();
-  }, []);
 
   // Generate prompt if empty
   useEffect(() => {
@@ -109,10 +101,8 @@ export function Step4Model() {
     setDraft({ conversationStarters: starters });
   };
 
-  const providerModels = supportedModels[modelConfig.provider] || [];
-
   return (
-    <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
+    <ScrollView className="flex-1" showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 100 }}>
       <View className="px-5 py-4">
         {/* Model Provider Selection */}
         <View className="mb-6">
@@ -136,46 +126,16 @@ export function Step4Model() {
               <View className="flex-1">
                 <Text className="font-medium text-gray-900">
                   {provider.name}
-                  <Text className="text-gray-500 font-normal"> by {provider.company}</Text>
                 </Text>
-                <Text className="text-sm text-gray-500">{provider.description}</Text>
+                <Text className="text-sm text-gray-500">by {provider.company}</Text>
               </View>
               {modelConfig.provider === provider.id && (
                 <View className="bg-primary-600 w-6 h-6 rounded-full items-center justify-center">
-                  <Text className="text-white text-xs">OK</Text>
+                  <Text className="text-white text-xs">✓</Text>
                 </View>
               )}
             </TouchableOpacity>
           ))}
-
-          {/* Model variant selection */}
-          {providerModels.length > 1 && (
-            <View className="mt-3">
-              <Text className="text-xs text-gray-500 mb-2">Model variant:</Text>
-              <View className="flex-row flex-wrap">
-                {providerModels.map((model) => (
-                  <TouchableOpacity
-                    key={model.id}
-                    onPress={() => updateModelConfig({ model: model.id })}
-                    className={`px-3 py-2 rounded-lg mr-2 mb-2 ${
-                      modelConfig.model === model.id
-                        ? 'bg-primary-600'
-                        : 'bg-gray-100'
-                    }`}
-                  >
-                    <Text
-                      className={`text-sm ${
-                        modelConfig.model === model.id ? 'text-white' : 'text-gray-700'
-                      }`}
-                    >
-                      {model.name}
-                      {model.recommended && ' (Recommended)'}
-                    </Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
-            </View>
-          )}
         </View>
 
         {/* Temperature Slider */}

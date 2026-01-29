@@ -66,7 +66,7 @@ export function Step2Personality() {
   };
 
   return (
-    <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
+    <ScrollView className="flex-1" showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 100 }}>
       <View className="px-5 py-4">
         {/* Coaching Approach */}
         <View className="mb-6">

@@ -5,16 +5,23 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useFonts, Inter_400Regular, Inter_500Medium, Inter_600SemiBold, Inter_700Bold } from '@expo-google-fonts/inter';
 import * as SplashScreen from 'expo-splash-screen';
+import * as SecureStore from 'expo-secure-store';
 import { useAuthStore } from '../src/stores/auth';
 import VideoSplash from '../src/components/VideoSplash';
+import { OnboardingPromptModal } from '../src/components/OnboardingPromptModal';
+import { NotificationPermissionModal } from '../src/components/NotificationPermissionModal';
 import {
   setupNotificationListeners,
   registerForPushNotifications,
   getLastNotificationResponse,
   handleNotificationResponse,
+  getNotificationPermissionStatus,
 } from '../src/services/notifications';
 import { updatePushToken } from '../src/services/api';
 import '../global.css';
+
+const ONBOARDING_DISMISSED_KEY = 'onboarding_prompt_dismissed';
+const NOTIFICATION_PROMPT_SHOWN_KEY = 'notification_prompt_shown';
 
 // Keep splash screen visible while loading fonts
 SplashScreen.preventAutoHideAsync();
@@ -23,6 +30,8 @@ export default function RootLayout() {
   const router = useRouter();
   const segments = useSegments();
   const [showVideoSplash, setShowVideoSplash] = useState(true);
+  const [showOnboardingPrompt, setShowOnboardingPrompt] = useState(false);
+  const [showNotificationPrompt, setShowNotificationPrompt] = useState(false);
 
   const initialize = useAuthStore((state) => state.initialize);
   const isInitialized = useAuthStore((state) => state.isInitialized);
@@ -38,8 +47,9 @@ export default function RootLayout() {
     Inter_700Bold,
   });
 
-  // Track if we've registered push token this session
-  const hasRegisteredPush = useRef(false);
+  // Track if we've shown modals this session
+  const hasShownOnboardingPrompt = useRef(false);
+  const hasShownNotificationPrompt = useRef(false);
 
   useEffect(() => {
     initialize();
@@ -51,25 +61,46 @@ export default function RootLayout() {
     return cleanup;
   }, []);
 
-  // Register for push notifications when authenticated
+  // Show onboarding prompt modal after login (if not completed and not dismissed)
   useEffect(() => {
-    if (!isAuthenticated || hasRegisteredPush.current) return;
+    if (!isAuthenticated || !isInitialized || hasShownOnboardingPrompt.current) return;
+    if (hasCompletedOnboarding) return;
 
-    const registerPush = async () => {
-      try {
-        const token = await registerForPushNotifications();
-        if (token) {
-          await updatePushToken(token);
-          hasRegisteredPush.current = true;
-          console.log('Push token registered with backend');
-        }
-      } catch (error) {
-        console.error('Error registering push notifications:', error);
+    const checkOnboardingPrompt = async () => {
+      const dismissed = await SecureStore.getItemAsync(ONBOARDING_DISMISSED_KEY);
+      if (!dismissed) {
+        // Delay slightly to let the UI settle
+        setTimeout(() => {
+          setShowOnboardingPrompt(true);
+          hasShownOnboardingPrompt.current = true;
+        }, 500);
       }
     };
 
-    registerPush();
-  }, [isAuthenticated]);
+    checkOnboardingPrompt();
+  }, [isAuthenticated, isInitialized, hasCompletedOnboarding]);
+
+  // Show notification prompt after onboarding prompt is dismissed/completed
+  useEffect(() => {
+    if (!isAuthenticated || !isInitialized || hasShownNotificationPrompt.current) return;
+    if (showOnboardingPrompt) return; // Wait for onboarding prompt to close
+
+    const checkNotificationPrompt = async () => {
+      const alreadyShown = await SecureStore.getItemAsync(NOTIFICATION_PROMPT_SHOWN_KEY);
+      if (alreadyShown) return;
+
+      const status = await getNotificationPermissionStatus();
+      if (status !== 'granted') {
+        // Delay to not overwhelm user
+        setTimeout(() => {
+          setShowNotificationPrompt(true);
+          hasShownNotificationPrompt.current = true;
+        }, 1000);
+      }
+    };
+
+    checkNotificationPrompt();
+  }, [isAuthenticated, isInitialized, showOnboardingPrompt]);
 
   // Handle notification tap from cold start
   useEffect(() => {
@@ -84,6 +115,36 @@ export default function RootLayout() {
 
     handleColdStart();
   }, [isInitialized]);
+
+  const handleStartOnboarding = () => {
+    setShowOnboardingPrompt(false);
+    router.push('/(welcome)/onboarding');
+  };
+
+  const handleSkipOnboarding = async () => {
+    setShowOnboardingPrompt(false);
+    await SecureStore.setItemAsync(ONBOARDING_DISMISSED_KEY, 'true');
+  };
+
+  const handleAllowNotifications = async () => {
+    setShowNotificationPrompt(false);
+    await SecureStore.setItemAsync(NOTIFICATION_PROMPT_SHOWN_KEY, 'true');
+
+    try {
+      const token = await registerForPushNotifications();
+      if (token) {
+        await updatePushToken(token);
+        console.log('Push token registered with backend');
+      }
+    } catch (error) {
+      console.error('Error registering push notifications:', error);
+    }
+  };
+
+  const handleDismissNotifications = async () => {
+    setShowNotificationPrompt(false);
+    await SecureStore.setItemAsync(NOTIFICATION_PROMPT_SHOWN_KEY, 'true');
+  };
 
   // Hide splash screen when fonts and auth are ready
   const onLayoutRootView = useCallback(async () => {
@@ -106,20 +167,14 @@ export default function RootLayout() {
     // Show welcome screen for first-time unauthenticated users
     const shouldShowWelcome = !isAuthenticated && !hasSeenWelcome;
 
-    // New users who just signed up need to complete onboarding
-    const needsOnboarding = isAuthenticated && !hasCompletedOnboarding;
-
     if (shouldShowWelcome && !inWelcomeGroup) {
       // Redirect to welcome screen
       router.replace('/(welcome)');
-    } else if (needsOnboarding && !inOnboarding) {
-      // Redirect new authenticated users to onboarding
-      router.replace('/(welcome)/onboarding');
-    } else if (!shouldShowWelcome && !needsOnboarding && inWelcomeGroup) {
-      // Redirect away from welcome screen to tabs
+    } else if (!shouldShowWelcome && inWelcomeGroup && !inOnboarding) {
+      // Redirect away from welcome screen to tabs (but allow onboarding if user chose it)
       router.replace('/(tabs)');
     }
-  }, [isInitialized, isAuthenticated, hasSeenWelcome, hasCompletedOnboarding, segments]);
+  }, [isInitialized, isAuthenticated, hasSeenWelcome, segments]);
 
   if (!fontsLoaded || !isInitialized) {
     return null;
@@ -196,6 +251,20 @@ export default function RootLayout() {
         {showVideoSplash && (
           <VideoSplash onFinish={() => setShowVideoSplash(false)} />
         )}
+
+        {/* Onboarding Prompt Modal */}
+        <OnboardingPromptModal
+          visible={showOnboardingPrompt}
+          onStartOnboarding={handleStartOnboarding}
+          onSkip={handleSkipOnboarding}
+        />
+
+        {/* Notification Permission Modal */}
+        <NotificationPermissionModal
+          visible={showNotificationPrompt}
+          onAllow={handleAllowNotifications}
+          onDismiss={handleDismissNotifications}
+        />
       </SafeAreaProvider>
     </GestureHandlerRootView>
   );

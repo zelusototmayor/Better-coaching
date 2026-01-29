@@ -28,14 +28,10 @@ const PORT = process.env.PORT || 3000;
 // Middleware
 app.use(helmet());
 
-// Parse CORS origins (supports comma-separated list)
-const corsOrigins = process.env.CORS_ORIGIN
-  ? process.env.CORS_ORIGIN.split(',').map(o => o.trim())
-  : '*';
-
+// CORS configuration - allow all origins in development
 app.use(
   cors({
-    origin: corsOrigins,
+    origin: true, // Reflects the request origin in development
     credentials: true,
   })
 );
