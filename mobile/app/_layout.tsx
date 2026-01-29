@@ -6,6 +6,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useFonts, Inter_400Regular, Inter_500Medium, Inter_600SemiBold, Inter_700Bold } from '@expo-google-fonts/inter';
 import * as SplashScreen from 'expo-splash-screen';
 import * as SecureStore from 'expo-secure-store';
+import { Mixpanel } from 'mixpanel-react-native';
 import { useAuthStore } from '../src/stores/auth';
 import VideoSplash from '../src/components/VideoSplash';
 import { OnboardingPromptModal } from '../src/components/OnboardingPromptModal';
@@ -22,6 +23,10 @@ import '../global.css';
 
 const ONBOARDING_DISMISSED_KEY = 'onboarding_prompt_dismissed';
 const NOTIFICATION_PROMPT_SHOWN_KEY = 'notification_prompt_shown';
+
+// Initialize Mixpanel
+const MIXPANEL_TOKEN = process.env.EXPO_PUBLIC_MIXPANEL_TOKEN || '';
+export const mixpanel = new Mixpanel(MIXPANEL_TOKEN, true);
 
 // Keep splash screen visible while loading fonts
 SplashScreen.preventAutoHideAsync();
@@ -53,6 +58,15 @@ export default function RootLayout() {
 
   useEffect(() => {
     initialize();
+  }, []);
+
+  // Initialize Mixpanel
+  useEffect(() => {
+    if (MIXPANEL_TOKEN) {
+      mixpanel.init().then(() => {
+        mixpanel.track('App Opened');
+      }).catch(console.warn);
+    }
   }, []);
 
   // Set up push notification listeners
