@@ -184,6 +184,14 @@ export default function RootLayout() {
               presentation: 'modal',
             }}
           />
+          <Stack.Screen
+            name="insights"
+            options={{
+              headerShown: true,
+              headerTitle: 'What I Remember',
+              presentation: 'modal',
+            }}
+          />
         </Stack>
         {showVideoSplash && (
           <VideoSplash onFinish={() => setShowVideoSplash(false)} />

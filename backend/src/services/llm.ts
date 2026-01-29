@@ -83,12 +83,17 @@ export interface AssessmentResultForPrompt {
  * Build the complete system prompt with user context, assessment results, and retrieved knowledge
  */
 export function buildSystemPrompt(
-  agent: Agent,
+  agent: Agent & { user_insights_prompt?: string | null },
   userContext?: UserContext | null,
   retrievedKnowledge?: RetrievedChunk[] | null,
   assessmentResults?: AssessmentResultForPrompt[] | null
 ): string {
   let prompt = agent.system_prompt;
+
+  // Inject user insights (memory from previous conversations) - this comes first as it's foundational
+  if (agent.user_insights_prompt) {
+    prompt += `\n\n${agent.user_insights_prompt}`;
+  }
 
   // Inject inline knowledge context (from agent creation - Notion URLs/uploaded files)
   const knowledgeContext = (agent.knowledge_context || []) as KnowledgeContextDoc[];

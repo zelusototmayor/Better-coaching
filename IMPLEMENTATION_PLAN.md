@@ -11,8 +11,8 @@
 | 1B | Structured Assessments | 3-5 days | ✅ Complete |
 | 2A | TTS Voice Output | 3-4 days | ✅ Complete |
 | 2B | Push Notifications | 5-7 days | ✅ Core Complete |
-| 3A | STT Voice Input | 4-5 days | 🔲 Not Started |
-| 3B | AI-Extracted Insights | 5-7 days | 🔲 Not Started |
+| 3A | STT Voice Input | 4-5 days | ✅ Complete |
+| 3B | AI-Extracted Insights | 5-7 days | ✅ Complete |
 
 ---
 
@@ -146,19 +146,19 @@
 
 | ID | Task | Status | Notes |
 |----|------|--------|-------|
-| V14 | Install expo-speech-recognition | 🔲 | Config plugin |
-| V15 | Configure microphone permissions | 🔲 | app.json |
-| V16 | Create speechRecognition service | 🔲 | `/mobile/src/services/speechRecognition.ts` |
-| V17 | Request microphone permission flow | 🔲 | |
-| V18 | Create VoiceInput component | 🔲 | `/mobile/src/components/VoiceInput.tsx` |
-| V19 | Add recording visualization | 🔲 | Waveform or pulse |
-| V20 | Show live transcription | 🔲 | |
-| V21 | Integrate VoiceInput into chat | 🔲 | Replace/augment keyboard |
-| V22 | Handle Android audio quirks | 🔲 | Format conversion |
-| V23 | Create /stt backend endpoint (fallback) | 🔲 | Optional |
-| V24 | Implement Whisper transcription | 🔲 | Optional |
+| V14 | Install expo-speech-recognition | ❌ | Using expo-av recording instead |
+| V15 | Configure microphone permissions | ✅ | Uses expo-av |
+| V16 | Create speechRecognition service | ✅ | Backend STT service with Whisper |
+| V17 | Request microphone permission flow | ✅ | In VoiceMode component |
+| V18 | Create VoiceInput component | ✅ | `/mobile/src/components/VoiceMode.tsx` - Full voice mode |
+| V19 | Add recording visualization | ✅ | Pulsing animation |
+| V20 | Show live transcription | ✅ | After recording |
+| V21 | Integrate VoiceInput into chat | ✅ | Voice mode button in chat |
+| V22 | Handle Android audio quirks | ✅ | expo-av handles this |
+| V23 | Create /stt backend endpoint | ✅ | `/backend/src/routes/stt.ts` |
+| V24 | Implement Whisper transcription | ✅ | OpenAI Whisper API |
 
-**Validation:** Tap mic → speak → see transcription → send message
+**Validation:** Tap mic → speak → see transcription → send message → hear response
 
 ---
 
@@ -170,17 +170,17 @@
 
 | ID | Task | Status | Notes |
 |----|------|--------|-------|
-| M16 | Create UserInsight Prisma model | 🔲 | |
-| M17 | Create insight extraction service | 🔲 | `/backend/src/services/insightExtractor.ts` |
-| M18 | Create extraction prompt template | 🔲 | |
-| M19 | Create cron job for extraction | 🔲 | Check idle conversations |
-| M20 | Extend buildSystemPrompt with insights | 🔲 | |
-| M21 | Create GET /users/me/insights endpoint | 🔲 | |
-| M22 | Create mobile insights review screen | 🔲 | `/mobile/app/insights.tsx` |
-| M23 | Add archive/edit insight functionality | 🔲 | |
-| M24 | Add insights link to profile | 🔲 | |
+| M16 | Create UserInsight Prisma model | ✅ | With InsightCategory enum |
+| M17 | Create insight extraction service | ✅ | `/backend/src/services/insightExtractor.ts` |
+| M18 | Create extraction prompt template | ✅ | LLM-based extraction with categories |
+| M19 | Create cron job for extraction | ✅ | Runs every 5 messages in chat |
+| M20 | Extend buildSystemPrompt with insights | ✅ | Added "What I Remember" section |
+| M21 | Create GET /users/me/insights endpoint | ✅ | Full CRUD in `/backend/src/routes/insights.ts` |
+| M22 | Create mobile insights review screen | ✅ | `/mobile/app/insights.tsx` |
+| M23 | Add archive/edit insight functionality | ✅ | Edit and delete in insights screen |
+| M24 | Add insights link to profile | ✅ | "What I Remember" in profile |
 
-**Validation:** Have conversation → next day see extracted insights → edit one → coach references it
+**Validation:** Have conversation → insights extracted → view in profile → edit → coach references it
 
 ---
 

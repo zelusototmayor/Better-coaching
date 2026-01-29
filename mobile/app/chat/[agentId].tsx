@@ -24,6 +24,7 @@ import { TierBadge, Badge } from '../../src/components/ui/Badge';
 import { StarRating, SessionCount } from '../../src/components/ui/Rating';
 import { AssessmentModal } from '../../src/components/assessments';
 import { AudioPlayer } from '../../src/components/AudioPlayer';
+import VoiceMode from '../../src/components/VoiceMode';
 import type { Message, Agent, AssessmentConfig } from '../../src/types';
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -442,6 +443,9 @@ export default function ChatScreen() {
   const [isSubmittingAssessment, setIsSubmittingAssessment] = useState(false);
   const [pendingMessageAfterAssessment, setPendingMessageAfterAssessment] = useState<string | null>(null);
 
+  // Voice mode state
+  const [showVoiceMode, setShowVoiceMode] = useState(false);
+
   const {
     messages,
     isStreaming,
@@ -726,6 +730,14 @@ export default function ChatScreen() {
                 multiline
                 editable={!isSending}
               />
+              {/* Voice mode button */}
+              <Pressable
+                onPress={() => setShowVoiceMode(true)}
+                className="rounded-full w-11 h-11 items-center justify-center mr-2"
+                style={{ backgroundColor: colors.lavender }}
+              >
+                <Text className="text-xl">🎙️</Text>
+              </Pressable>
               <Pressable
                 onPress={() => handleSend()}
                 disabled={!input.trim() || isSending}
@@ -751,6 +763,30 @@ export default function ChatScreen() {
         onClose={() => setShowInfoModal(false)}
         agent={agent}
       />
+
+      {/* Voice Mode Modal */}
+      <Modal
+        visible={showVoiceMode}
+        animationType="slide"
+        presentationStyle="fullScreen"
+      >
+        <VoiceMode
+          agentId={agentId!}
+          agentName={agent.name}
+          agentAvatarUrl={agent.avatar_url}
+          isPremium={isPremium}
+          onMessage={async (text: string) => {
+            // Send message and return response
+            setHasUserSentMessage(true);
+            const newConvId = await sendMessage(agentId!, text, conversationId);
+            setConversationId(newConvId);
+            // Return the last assistant message
+            const lastMessage = messages[messages.length - 1];
+            return lastMessage?.role === 'assistant' ? lastMessage.content : '';
+          }}
+          onClose={() => setShowVoiceMode(false)}
+        />
+      </Modal>
 
       {/* Assessment Modal */}
       {pendingAssessment && (

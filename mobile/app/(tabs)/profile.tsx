@@ -307,6 +307,14 @@ export default function ProfileScreen() {
             onPress={() => router.push('/context')}
           />
           <MenuItem
+            icon={<SparkleIcon size={20} color={colors.skyDark} />}
+            iconBgColor={colors.skyLight}
+            iconColor={colors.skyDark}
+            title="What I Remember"
+            subtitle="AI-learned insights about you"
+            onPress={() => router.push('/insights')}
+          />
+          <MenuItem
             icon={<UserIcon size={20} color={colors.lavenderDark} />}
             iconBgColor={colors.lavenderLight}
             iconColor={colors.lavenderDark}

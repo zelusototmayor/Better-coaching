@@ -346,3 +346,107 @@ export async function updatePushToken(pushToken: string): Promise<{ success: boo
     body: JSON.stringify({ push_token: pushToken }),
   });
 }
+
+// ============================================
+// STT (Speech-to-Text) API
+// ============================================
+
+export async function transcribeAudio(audioBlob: Blob): Promise<{
+  text: string;
+  language?: string;
+  duration?: number;
+}> {
+  const token = await getAccessToken();
+  if (!token) {
+    throw new Error('Not authenticated');
+  }
+
+  const formData = new FormData();
+  formData.append('audio', audioBlob, 'audio.webm');
+
+  const response = await fetch(`${API_URL}/stt/transcribe`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    body: formData,
+  });
+
+  if (!response.ok) {
+    const error = await response.json().catch(() => ({}));
+    throw new Error(error.error || 'Transcription failed');
+  }
+
+  return response.json();
+}
+
+export async function getSTTStatus(): Promise<{
+  configured: boolean;
+  maxFileSizeMB: number;
+  supportedFormats: string[];
+}> {
+  return apiFetch('/stt/status');
+}
+
+// ============================================
+// INSIGHTS (Memory) API
+// ============================================
+
+export interface UserInsight {
+  id: string;
+  category: string;
+  content: string;
+  confidence: number;
+  isActive: boolean;
+  isArchived: boolean;
+  userEdited: boolean;
+  createdAt: string;
+  updatedAt: string;
+  agent?: {
+    id: string;
+    name: string;
+    avatarUrl?: string;
+  };
+}
+
+export async function getInsights(options?: {
+  agentId?: string;
+  category?: string;
+  includeArchived?: boolean;
+}): Promise<{ insights: UserInsight[] }> {
+  const params = new URLSearchParams();
+  if (options?.agentId) params.set('agentId', options.agentId);
+  if (options?.category) params.set('category', options.category);
+  if (options?.includeArchived) params.set('includeArchived', 'true');
+  const query = params.toString();
+  return apiFetch(`/insights${query ? `?${query}` : ''}`);
+}
+
+export async function getInsightCategories(): Promise<{
+  categories: Array<{ id: string; name: string; description: string }>;
+}> {
+  return apiFetch('/insights/categories');
+}
+
+export async function updateInsight(
+  insightId: string,
+  content: string
+): Promise<{ success: boolean }> {
+  return apiFetch(`/insights/${insightId}`, {
+    method: 'PATCH',
+    body: JSON.stringify({ content }),
+  });
+}
+
+export async function deleteInsight(insightId: string): Promise<{ success: boolean }> {
+  return apiFetch(`/insights/${insightId}`, { method: 'DELETE' });
+}
+
+export async function extractInsights(
+  conversationId: string
+): Promise<{ success: boolean; extracted: number; saved: number }> {
+  return apiFetch('/insights/extract', {
+    method: 'POST',
+    body: JSON.stringify({ conversationId }),
+  });
+}

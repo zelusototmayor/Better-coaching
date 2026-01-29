@@ -4,6 +4,7 @@ import { authenticate } from '../middleware/auth';
 import { canSendMessage, recordFreeTrial } from '../services/subscription';
 import { generateCoachResponse, ChatMessage, AssessmentResultForPrompt } from '../services/llm';
 import { retrieveRelevantChunks, hasKnowledgeSources } from '../services/retrieval';
+import { getInsightsForPrompt, processConversationForInsights } from '../services/insightExtractor';
 import type { AssessmentConfig, AssessmentQuestion } from '../validation/assessments';
 
 const router = Router();
@@ -94,6 +95,14 @@ router.post('/message', authenticate, async (req: Request, res: Response) => {
 
     const userContext = user?.context || null;
 
+    // Get user insights (memory) for this agent
+    let userInsightsPrompt: string | null = null;
+    try {
+      userInsightsPrompt = await getInsightsForPrompt(userId, agent_id);
+    } catch (error) {
+      console.error('Error fetching user insights:', error);
+    }
+
     // Retrieve relevant knowledge from agent's knowledge sources
     let retrievedKnowledge = null;
     try {
@@ -169,6 +178,7 @@ router.post('/message', authenticate, async (req: Request, res: Response) => {
         model_config: agent.modelConfig,
         example_conversations: agent.exampleConversations,
         knowledge_context: agent.knowledgeContext,
+        user_insights_prompt: userInsightsPrompt,
       };
 
       // Stream the response
@@ -200,6 +210,15 @@ router.post('/message', authenticate, async (req: Request, res: Response) => {
 
       // Record free trial usage if this was a free trial message
       await recordFreeTrial(userId, agent_id);
+
+      // Extract insights in the background (non-blocking)
+      // Only process every 5 messages to avoid excessive API calls
+      const messageCount = messages.length;
+      if (messageCount > 0 && messageCount % 5 === 0) {
+        processConversationForInsights(convId).catch((err) => {
+          console.error('Background insight extraction failed:', err);
+        });
+      }
 
       // Send completion signal with free trial info
       const completionData: any = { done: true, conversation_id: convId };

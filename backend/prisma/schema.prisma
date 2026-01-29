@@ -50,6 +50,7 @@ model User {
   refreshTokens RefreshToken[]
   integrations  IntegrationConnection[]
   assessmentResponses AssessmentResponse[]
+  insights      UserInsight[]
 
   @@map("users")
 }
@@ -123,6 +124,7 @@ model Agent {
   freeTrials    FreeTrial[]
   knowledgeSources KnowledgeSource[]
   assessmentResponses AssessmentResponse[]
+  userInsights  UserInsight[]
 
   @@index([category])
   @@index([isPublished])
@@ -247,6 +249,57 @@ model FreeTrial {
   @@unique([visitorId, agentId])
   @@index([visitorId])
   @@map("free_trials")
+}
+
+// ============================================
+// USER INSIGHTS (AI-Extracted Memory)
+// ============================================
+
+model UserInsight {
+  id              String        @id @default(uuid())
+  userId          String        @map("user_id")
+  agentId         String?       @map("agent_id")  // null = global insight
+  conversationId  String?       @map("conversation_id")
+
+  // Insight content
+  category        InsightCategory
+  content         String        // The actual insight (e.g., "User is training for a marathon")
+  confidence      Float         @default(0.8)  // 0-1 confidence score
+
+  // Status
+  isActive        Boolean       @default(true) @map("is_active")
+  isArchived      Boolean       @default(false) @map("is_archived")
+  userEdited      Boolean       @default(false) @map("user_edited")  // If user modified it
+
+  // Source tracking
+  extractedFrom   String?       @map("extracted_from")  // Message ID or conversation excerpt
+
+  // Timestamps
+  createdAt       DateTime      @default(now()) @map("created_at")
+  updatedAt       DateTime      @updatedAt @map("updated_at")
+  lastUsedAt      DateTime?     @map("last_used_at")  // When this insight was used in a prompt
+
+  // Relations
+  user            User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  agent           Agent?        @relation(fields: [agentId], references: [id], onDelete: SetNull)
+
+  @@index([userId])
+  @@index([userId, agentId])
+  @@index([category])
+  @@map("user_insights")
+}
+
+enum InsightCategory {
+  GOAL           // User's goals and aspirations
+  CHALLENGE      // Struggles, obstacles, pain points
+  VALUE          // Core values and beliefs
+  PREFERENCE     // Communication/coaching preferences
+  ACHIEVEMENT    // Past accomplishments
+  COMMITMENT     // Things they've committed to do
+  CONTEXT        // Life circumstances, background info
+  RELATIONSHIP   // People in their life (partner, boss, etc.)
+  HABIT          // Current habits or routines
+  EMOTION        // Recurring emotional patterns
 }
 
 // ============================================
