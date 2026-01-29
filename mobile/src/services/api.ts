@@ -292,3 +292,46 @@ export async function linkRevenueCat(revenueCatId: string): Promise<{ user: User
     body: JSON.stringify({ revenuecat_id: revenueCatId }),
   });
 }
+
+// ============================================
+// TTS API
+// ============================================
+
+export async function synthesizeSpeech(text: string, agentId?: string): Promise<string> {
+  const token = await getAccessToken();
+  if (!token) {
+    throw new Error('Not authenticated');
+  }
+
+  const response = await fetch(`${API_URL}/tts/synthesize`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ text, agentId }),
+  });
+
+  if (!response.ok) {
+    const error = await response.json().catch(() => ({}));
+    throw new Error(error.error || 'TTS synthesis failed');
+  }
+
+  // Convert blob to data URL for expo-av
+  const blob = await response.blob();
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      resolve(reader.result as string);
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(blob);
+  });
+}
+
+export async function getTTSVoices(): Promise<{
+  voices: Array<{ id: string; key?: string; name: string; description?: string }>;
+  configured: boolean;
+}> {
+  return apiFetch('/tts/voices');
+}

@@ -17,6 +17,7 @@ import integrationsRouter from './routes/integrations';
 import knowledgeRouter from './routes/knowledge';
 import knowledgeSimpleRouter from './routes/knowledgeSimple';
 import assessmentsRouter from './routes/assessments';
+import ttsRouter from './routes/tts';
 import { prisma } from './services/database';
 
 const app = express();
@@ -103,6 +104,7 @@ app.use('/api/integrations', integrationsRouter);
 app.use('/api/knowledge', knowledgeRouter);
 app.use('/api/knowledge-simple', knowledgeSimpleRouter);
 app.use('/api', assessmentsRouter);
+app.use('/api/tts', ttsRouter);
 
 // 404 handler
 app.use((req, res) => {

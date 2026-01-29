@@ -23,6 +23,7 @@ import { InfoIcon, XIcon, ChevronLeftIcon } from '../../src/components/ui/Icons'
 import { TierBadge, Badge } from '../../src/components/ui/Badge';
 import { StarRating, SessionCount } from '../../src/components/ui/Rating';
 import { AssessmentModal } from '../../src/components/assessments';
+import { AudioPlayer } from '../../src/components/AudioPlayer';
 import type { Message, Agent, AssessmentConfig } from '../../src/types';
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -65,8 +66,19 @@ function getGreetingMessage(agent: Agent): string {
 // MESSAGE BUBBLE COMPONENT
 // ═══════════════════════════════════════════════════════════════════════════
 
-function MessageBubble({ message, isStreaming }: { message: Message; isStreaming?: boolean }) {
+function MessageBubble({
+  message,
+  isStreaming,
+  agentId,
+  showAudioPlayer,
+}: {
+  message: Message;
+  isStreaming?: boolean;
+  agentId?: string;
+  showAudioPlayer?: boolean;
+}) {
   const isUser = message.role === 'user';
+  const canPlayAudio = !isUser && !isStreaming && message.content && showAudioPlayer;
 
   return (
     <View className={`mb-3 ${isUser ? 'items-end' : 'items-start'}`}>
@@ -88,15 +100,24 @@ function MessageBubble({ message, isStreaming }: { message: Message; isStreaming
             <Text style={{ color: colors.sage, fontSize: 18 }}> ●●●</Text>
           </View>
         ) : (
-          <Text
-            className={`text-body ${isUser ? 'text-white' : ''}`}
-            style={{ lineHeight: 22, color: isUser ? '#fff' : colors.textPrimary }}
-          >
-            {message.content}
-            {isStreaming && message.content && (
-              <Text style={{ color: colors.sage }}>▊</Text>
+          <>
+            <Text
+              className={`text-body ${isUser ? 'text-white' : ''}`}
+              style={{ lineHeight: 22, color: isUser ? '#fff' : colors.textPrimary }}
+            >
+              {message.content}
+              {isStreaming && message.content && (
+                <Text style={{ color: colors.sage }}>▊</Text>
+              )}
+            </Text>
+
+            {/* Audio play button for assistant messages */}
+            {canPlayAudio && (
+              <View className="flex-row justify-end mt-2 -mb-1 -mr-1">
+                <AudioPlayer text={message.content} agentId={agentId} compact />
+              </View>
             )}
-          </Text>
+          </>
         )}
       </View>
     </View>
@@ -656,6 +677,8 @@ export default function ChatScreen() {
                 <MessageBubble
                   message={item}
                   isStreaming={item.id === 'streaming'}
+                  agentId={agentId}
+                  showAudioPlayer={isPremium}
                 />
               )}
               contentContainerStyle={{ padding: 16, paddingBottom: 8 }}

@@ -9,7 +9,7 @@
 |-------|---------|-----------|--------|
 | 1A | User Context Onboarding | 2-3 days | ✅ Complete |
 | 1B | Structured Assessments | 3-5 days | ✅ Complete |
-| 2A | TTS Voice Output | 3-4 days | 🔲 Not Started |
+| 2A | TTS Voice Output | 3-4 days | ✅ Complete |
 | 2B | Push Notifications | 5-7 days | 🔲 Not Started |
 | 3A | STT Voice Input | 4-5 days | 🔲 Not Started |
 | 3B | AI-Extracted Insights | 5-7 days | 🔲 Not Started |
@@ -82,19 +82,19 @@
 
 | ID | Task | Status | Notes |
 |----|------|--------|-------|
-| V01 | Create ElevenLabs service | 🔲 | `/backend/src/services/tts.ts` |
-| V02 | Implement synthesizeSpeech function | 🔲 | Call ElevenLabs API |
-| V03 | Create /tts endpoint | 🔲 | `/backend/src/routes/tts.ts` |
-| V04 | Add voiceId to Agent personalityConfig | 🔲 | Schema update |
-| V05 | Create voice selection UI in creator | 🔲 | Play samples |
-| V06 | Create AudioPlayer component | 🔲 | `/mobile/src/components/AudioPlayer.tsx` |
-| V07 | Add play button to MessageBubble | 🔲 | Update existing component |
-| V08 | Implement audio playback with expo-av | 🔲 | |
-| V09 | Add pause/resume controls | 🔲 | |
-| V10 | Implement auto-play toggle | 🔲 | Chat setting |
-| V11 | Create TTS caching service | 🔲 | Redis or file cache |
-| V12 | Add premium check to TTS endpoint | 🔲 | Check subscription |
-| V13 | Track TTS usage per user | 🔲 | For free tier limits |
+| V01 | Create ElevenLabs service | ✅ | `/backend/src/services/tts.ts` |
+| V02 | Implement synthesizeSpeech function | ✅ | Call ElevenLabs API |
+| V03 | Create /tts endpoint | ✅ | `/backend/src/routes/tts.ts` |
+| V04 | Add voiceId to Agent personalityConfig | ✅ | Already supported in JSON |
+| V05 | Create voice selection UI in creator | ❌ | Skipped - can add later |
+| V06 | Create AudioPlayer component | ✅ | `/mobile/src/components/AudioPlayer.tsx` |
+| V07 | Add play button to MessageBubble | ✅ | Update existing component |
+| V08 | Implement audio playback with expo-av | ✅ | |
+| V09 | Add pause/resume controls | ✅ | |
+| V10 | Implement auto-play toggle | ❌ | Skipped - can add later |
+| V11 | Create TTS caching service | ✅ | In-memory cache in route |
+| V12 | Add premium check to TTS endpoint | ✅ | Check subscription |
+| V13 | Track TTS usage per user | ❌ | Skipped - can add later |
 
 **Validation:** Open chat → tap play on message → audio plays → pause works
 
