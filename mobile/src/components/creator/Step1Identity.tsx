@@ -6,7 +6,11 @@ import {
   TouchableOpacity,
   ScrollView,
   Modal,
+  Image,
+  Alert,
+  ActivityIndicator,
 } from 'react-native';
+import * as ImagePicker from 'expo-image-picker';
 import { useCreatorStore } from '../../stores/creator';
 
 // Available avatar initials/symbols
@@ -38,14 +42,18 @@ const SUGGESTED_TAGS: Record<string, string[]> = {
   learning: ['study', 'memory', 'languages', 'skills', 'reading', 'courses'],
 };
 
-interface EmojiPickerProps {
+interface AvatarPickerProps {
   visible: boolean;
   onClose: () => void;
-  onSelect: (emoji: string) => void;
+  onSelect: (avatar: string) => void;
+  onUpload: () => void;
   selected: string;
+  isUploading: boolean;
 }
 
-function EmojiPicker({ visible, onClose, onSelect, selected }: EmojiPickerProps) {
+function AvatarPicker({ visible, onClose, onSelect, onUpload, selected, isUploading }: AvatarPickerProps) {
+  const isImageUrl = selected.startsWith('http');
+
   return (
     <Modal visible={visible} transparent animationType="fade">
       <TouchableOpacity
@@ -53,23 +61,44 @@ function EmojiPicker({ visible, onClose, onSelect, selected }: EmojiPickerProps)
         onPress={onClose}
         className="flex-1 bg-black/50 justify-center items-center"
       >
-        <View className="bg-white rounded-2xl p-4 w-72">
+        <View className="bg-white rounded-2xl p-4 w-80">
           <Text className="text-lg font-semibold text-gray-900 mb-3 text-center">
             Choose Avatar
           </Text>
+
+          {/* Upload Photo Button */}
+          <TouchableOpacity
+            onPress={() => {
+              onUpload();
+            }}
+            disabled={isUploading}
+            className="bg-primary-600 py-3 rounded-xl mb-4 items-center flex-row justify-center"
+          >
+            {isUploading ? (
+              <ActivityIndicator color="white" size="small" />
+            ) : (
+              <Text className="text-white font-semibold">Upload Photo</Text>
+            )}
+          </TouchableOpacity>
+
+          <Text className="text-gray-500 text-center text-sm mb-3">
+            Or choose a letter
+          </Text>
+
+          {/* Letter Options */}
           <View className="flex-row flex-wrap justify-center">
-            {AVATAR_OPTIONS.map((emoji) => (
+            {AVATAR_OPTIONS.map((letter) => (
               <TouchableOpacity
-                key={emoji}
+                key={letter}
                 onPress={() => {
-                  onSelect(emoji);
+                  onSelect(letter);
                   onClose();
                 }}
-                className={`w-12 h-12 items-center justify-center rounded-xl m-1 ${
-                  selected === emoji ? 'bg-primary-100' : 'bg-gray-100'
+                className={`w-11 h-11 items-center justify-center rounded-xl m-1 ${
+                  !isImageUrl && selected === letter ? 'bg-primary-100' : 'bg-gray-100'
                 }`}
               >
-                <Text className="text-2xl">{emoji}</Text>
+                <Text className="text-xl font-semibold text-gray-700">{letter}</Text>
               </TouchableOpacity>
             ))}
           </View>
@@ -81,10 +110,47 @@ function EmojiPicker({ visible, onClose, onSelect, selected }: EmojiPickerProps)
 
 export function Step1Identity() {
   const { draft, setDraft } = useCreatorStore();
-  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const [showAvatarPicker, setShowAvatarPicker] = useState(false);
   const [tagInput, setTagInput] = useState('');
+  const [isUploading, setIsUploading] = useState(false);
 
   const suggestedTags = draft.category ? SUGGESTED_TAGS[draft.category] || [] : [];
+  const isAvatarImage = draft.avatar.startsWith('http');
+
+  const handleImageUpload = async () => {
+    try {
+      // Request permission
+      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (status !== 'granted') {
+        Alert.alert('Permission Required', 'Please allow access to your photo library to upload an avatar.');
+        return;
+      }
+
+      // Launch image picker
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [1, 1],
+        quality: 0.8,
+      });
+
+      if (result.canceled) return;
+
+      const imageUri = result.assets[0].uri;
+      setIsUploading(true);
+
+      // For now, we'll use the local URI directly
+      // In production, you'd upload to a server and get back a URL
+      // TODO: Implement actual image upload to server
+      setDraft({ avatar: imageUri });
+      setShowAvatarPicker(false);
+    } catch (error) {
+      console.error('Error picking image:', error);
+      Alert.alert('Error', 'Failed to select image. Please try again.');
+    } finally {
+      setIsUploading(false);
+    }
+  };
 
   const addTag = (tag: string) => {
     const normalizedTag = tag.toLowerCase().trim().replace(/\s+/g, '-');
@@ -108,12 +174,21 @@ export function Step1Identity() {
         {/* Avatar Selection */}
         <View className="items-center mb-6">
           <TouchableOpacity
-            onPress={() => setShowEmojiPicker(true)}
-            className="bg-primary-100 rounded-2xl w-24 h-24 items-center justify-center mb-2"
+            onPress={() => setShowAvatarPicker(true)}
+            className="rounded-2xl w-24 h-24 items-center justify-center mb-2 overflow-hidden"
+            style={{ backgroundColor: isAvatarImage ? '#E5E7EB' : '#DCE9DF' }}
           >
-            <Text className="text-5xl">{draft.avatar}</Text>
+            {isAvatarImage ? (
+              <Image
+                source={{ uri: draft.avatar }}
+                style={{ width: 96, height: 96 }}
+                resizeMode="cover"
+              />
+            ) : (
+              <Text className="text-5xl">{draft.avatar}</Text>
+            )}
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => setShowEmojiPicker(true)}>
+          <TouchableOpacity onPress={() => setShowAvatarPicker(true)}>
             <Text className="text-primary-600 text-sm font-medium">Change Avatar</Text>
           </TouchableOpacity>
         </View>
@@ -268,11 +343,13 @@ export function Step1Identity() {
         </View>
       </View>
 
-      <EmojiPicker
-        visible={showEmojiPicker}
-        onClose={() => setShowEmojiPicker(false)}
-        onSelect={(emoji) => setDraft({ avatar: emoji })}
+      <AvatarPicker
+        visible={showAvatarPicker}
+        onClose={() => setShowAvatarPicker(false)}
+        onSelect={(avatar) => setDraft({ avatar })}
+        onUpload={handleImageUpload}
         selected={draft.avatar}
+        isUploading={isUploading}
       />
     </ScrollView>
   );

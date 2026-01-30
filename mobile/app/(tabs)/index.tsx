@@ -6,10 +6,10 @@ import {
   RefreshControl,
   ActivityIndicator,
   Pressable,
+  Image,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { LinearGradient } from 'expo-linear-gradient';
 import { useAgentsStore } from '../../src/stores/agents';
 import { useChatStore } from '../../src/stores/chat';
 import { useAuthStore } from '../../src/stores/auth';
@@ -17,6 +17,7 @@ import { CoachCard } from '../../src/components/coaches/CoachCard';
 import { FindYourCoachCard } from '../../src/components/coaches/FindYourCoachCard';
 import { SearchBar, CategoryCard } from '../../src/components/ui';
 import { ContextRefreshBanner } from '../../src/components/ContextRefreshBanner';
+import { getAvatarByHash } from '../../src/utils/avatars';
 
 // ═══════════════════════════════════════════════════════════════════════════
 // UI DESIGN SPEC V2 - SHARPER, GLASSIER AESTHETIC
@@ -33,19 +34,6 @@ const colors = {
   textSecondary: '#6B7280',  // Spec secondary text
   textMuted: '#9CA3AF',      // Spec muted text
 };
-
-// Avatar gradient colors for Continue section cards (using spec CTA for sage)
-const avatarGradients = [
-  ['#C4B5D4', '#A890BE'], // Lavender/purple
-  ['#6F8F79', '#4F6F5A'], // Sage green (spec CTA gradient)
-  ['#D4A5A5', '#BE8A8A'], // Blush pink
-  ['#A5C4D4', '#8AAEBD'], // Sky blue
-];
-
-function getAvatarGradient(name: string): [string, string] {
-  const hash = name.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-  return avatarGradients[hash % avatarGradients.length] as [string, string];
-}
 
 export default function HomeScreen() {
   const router = useRouter();
@@ -81,11 +69,26 @@ export default function HomeScreen() {
     router.push('/explore');
   };
 
-  // Check if user has any conversations
-  const hasConversations = conversations.length > 0;
+  // Deduplicate conversations by agent - keep only the most recent per agent
+  const uniqueConversations = conversations.reduce((acc, conv) => {
+    const agentId = conv.agent?.id || conv.agentId;
+    if (!agentId) return acc;
 
-  // Get recent conversations sorted by updated_at (already sorted from API)
-  const recentConversations = conversations.slice(0, 5);
+    const existing = acc.get(agentId);
+    if (!existing || new Date(conv.updatedAt) > new Date(existing.updatedAt)) {
+      acc.set(agentId, conv);
+    }
+    return acc;
+  }, new Map<string, typeof conversations[0]>());
+
+  const deduplicatedConversations = Array.from(uniqueConversations.values())
+    .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
+
+  // Check if user has any conversations
+  const hasConversations = deduplicatedConversations.length > 0;
+
+  // Get recent conversations (already deduplicated and sorted)
+  const recentConversations = deduplicatedConversations.slice(0, 5);
 
   return (
     <SafeAreaView className="flex-1 bg-surface" edges={['top']}>
@@ -147,10 +150,8 @@ export default function HomeScreen() {
               {recentConversations.map((conversation) => {
                 const agent = conversation.agent;
                 if (!agent) return null;
-                const gradientColors = getAvatarGradient(agent.name);
-                const initial = agent.name.charAt(0).toUpperCase();
-                // Calculate time ago
-                const updatedAt = new Date(conversation.updated_at);
+                // Calculate time ago - use camelCase field from API
+                const updatedAt = new Date(conversation.updatedAt);
                 const now = new Date();
                 const diffMs = now.getTime() - updatedAt.getTime();
                 const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
@@ -173,7 +174,6 @@ export default function HomeScreen() {
                       borderWidth: 1.5,
                       borderColor: colors.cardBorder,
                       width: 170,
-                      // Enhanced shadow for sharper depth
                       shadowColor: '#111827',
                       shadowOffset: { width: 0, height: 4 },
                       shadowOpacity: 0.12,
@@ -181,35 +181,43 @@ export default function HomeScreen() {
                       elevation: 4,
                     }}
                   >
-                    {/* Gradient banner at top with letter */}
-                    <LinearGradient
-                      colors={gradientColors}
-                      start={{ x: 0, y: 0 }}
-                      end={{ x: 1, y: 1 }}
+                    {/* Top section with avatar */}
+                    <View
                       style={{
-                        height: 56,
-                        paddingHorizontal: 14,
-                        paddingTop: 12,
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                        alignItems: 'flex-start',
+                        height: 72,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        backgroundColor: '#F5F5F7',
+                        position: 'relative',
                       }}
                     >
-                      <Text className="text-xl font-inter-bold text-white">
-                        {initial}
-                      </Text>
+                      {/* Premium badge */}
                       {isPremium && (
                         <View
-                          className="w-6 h-6 rounded-full items-center justify-center"
-                          style={{ backgroundColor: 'rgba(255,255,255,0.3)' }}
+                          className="absolute top-2 right-2 w-5 h-5 rounded-full items-center justify-center"
+                          style={{ backgroundColor: colors.sage }}
                         >
-                          <Text className="text-xs font-inter-bold text-white">
+                          <Text className="text-[10px] font-inter-bold text-white">
                             P
                           </Text>
                         </View>
                       )}
-                    </LinearGradient>
-                    {/* Content below banner */}
+                      {/* Avatar - image or local fallback */}
+                      <Image
+                        source={
+                          agent.avatarUrl && agent.avatarUrl.startsWith('http')
+                            ? { uri: agent.avatarUrl }
+                            : getAvatarByHash(agent.name)
+                        }
+                        style={{
+                          width: 48,
+                          height: 48,
+                          borderRadius: 24,
+                          backgroundColor: '#E5E7EB',
+                        }}
+                      />
+                    </View>
+                    {/* Content below avatar */}
                     <View className="px-3.5 py-3">
                       {/* Coach name */}
                       <Text

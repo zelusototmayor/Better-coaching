@@ -6,11 +6,13 @@ import {
   FlatList,
   ActivityIndicator,
   Alert,
+  Image,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAuthStore } from '../../src/stores/auth';
 import { useChatStore } from '../../src/stores/chat';
+import { getAvatarByHash } from '../../src/utils/avatars';
 import type { Conversation } from '../../src/types';
 
 // Conversation Card
@@ -22,9 +24,13 @@ function ConversationCard({
   onDelete: () => void;
 }) {
   const router = useRouter();
+  const agent = conversation.agent;
+  const agentName = agent?.name || 'Coach';
 
   const formatDate = (dateString: string) => {
+    if (!dateString) return '';
     const date = new Date(dateString);
+    if (isNaN(date.getTime())) return '';
     const now = new Date();
     const diffDays = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60 * 24));
 
@@ -41,9 +47,12 @@ function ConversationCard({
     ]);
   };
 
+  // Use agent.id from the nested object (which we know is correct from the backend)
+  const agentId = agent?.id || conversation.agentId;
+
   return (
     <TouchableOpacity
-      onPress={() => router.push(`/chat/${conversation.agent_id}?conversationId=${conversation.id}`)}
+      onPress={() => router.push(`/chat/${agentId}?conversationId=${conversation.id}`)}
       onLongPress={handleLongPress}
       className="rounded-2xl mb-3 mx-5"
       style={{
@@ -58,18 +67,30 @@ function ConversationCard({
       }}
     >
       <View className="p-4 flex-row">
-        <View className="bg-primary-100 rounded-xl w-12 h-12 items-center justify-center mr-3">
-          <Text className="text-xl">{conversation.agent?.avatar_url || ''}</Text>
-        </View>
+        {/* Avatar */}
+        <Image
+          source={
+            agent?.avatarUrl && agent.avatarUrl.startsWith('http')
+              ? { uri: agent.avatarUrl }
+              : getAvatarByHash(agentName)
+          }
+          style={{
+            width: 48,
+            height: 48,
+            borderRadius: 12,
+            marginRight: 12,
+            backgroundColor: '#E5E7EB',
+          }}
+        />
         <View className="flex-1">
           <Text className="font-semibold text-gray-900" numberOfLines={1}>
-            {conversation.agent?.name || 'Coach'}
+            {agentName}
           </Text>
           <Text className="text-sm text-gray-500 mt-1" numberOfLines={1}>
-            {conversation.agent?.tagline || 'Conversation'}
+            {agent?.tagline || 'Conversation'}
           </Text>
           <Text className="text-xs text-gray-400 mt-1">
-            {formatDate(conversation.updated_at)}
+            {formatDate(conversation.updatedAt)}
           </Text>
         </View>
         <View className="justify-center">
@@ -117,6 +138,22 @@ export default function HistoryScreen() {
     }
   }, [isAuthenticated]);
 
+  // Deduplicate conversations by agent - keep only the most recent per agent
+  const uniqueConversations = conversations.reduce((acc, conv) => {
+    const agentId = conv.agent?.id || conv.agentId;
+    if (!agentId) return acc;
+
+    // If we haven't seen this agent yet, or this conversation is newer, use it
+    const existing = acc.get(agentId);
+    if (!existing || new Date(conv.updatedAt) > new Date(existing.updatedAt)) {
+      acc.set(agentId, conv);
+    }
+    return acc;
+  }, new Map<string, typeof conversations[0]>());
+
+  const deduplicatedConversations = Array.from(uniqueConversations.values())
+    .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
+
   if (!isAuthenticated) {
     return (
       <SafeAreaView className="flex-1 bg-background-light" edges={['top']}>
@@ -146,7 +183,7 @@ export default function HistoryScreen() {
         <View className="flex-1 items-center justify-center">
           <ActivityIndicator color="#4F46E5" size="large" />
         </View>
-      ) : conversations.length === 0 ? (
+      ) : deduplicatedConversations.length === 0 ? (
         <View className="flex-1 items-center justify-center px-8">
           <View className="bg-gray-100 rounded-full w-16 h-16 items-center justify-center mb-4">
             <Text className="text-3xl"></Text>
@@ -164,7 +201,7 @@ export default function HistoryScreen() {
         </View>
       ) : (
         <FlatList
-          data={conversations}
+          data={deduplicatedConversations}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
             <ConversationCard

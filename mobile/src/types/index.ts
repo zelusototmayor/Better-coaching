@@ -124,14 +124,22 @@ export interface Category {
 }
 
 // Conversation types
+export interface ConversationAgent {
+  id: string;
+  name: string;
+  avatarUrl?: string;
+  tagline?: string;
+  greetingMessage?: string;
+}
+
 export interface Conversation {
   id: string;
-  user_id: string;
-  agent_id: string;
-  agent?: Pick<Agent, 'id' | 'name' | 'avatar_url' | 'tagline' | 'greeting_message'>;
+  userId: string;
+  agentId: string;
+  agent?: ConversationAgent;
   title?: string;
-  created_at: string;
-  updated_at: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface Message {

@@ -169,18 +169,44 @@ export default function NewCoachScreen() {
           headerTitle: 'Create Coach',
           headerBackTitle: 'Cancel',
           headerLeft: () => (
-            <TouchableOpacity onPress={handleBack} className="mr-4">
-              <Text className="text-primary-600 text-base">
-                {currentStep > 1 ? '← Back' : 'Cancel'}
+            <TouchableOpacity
+              onPress={handleBack}
+              style={{
+                paddingHorizontal: 16,
+                paddingVertical: 8,
+                borderRadius: 20,
+                backgroundColor: 'white',
+                borderWidth: 1,
+                borderColor: '#E5E7EB',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <Text style={{ color: '#4F6F5A', fontSize: 14, fontWeight: '500' }}>
+                {currentStep > 1 ? 'Back' : 'Cancel'}
               </Text>
             </TouchableOpacity>
           ),
           headerRight: () => (
-            <TouchableOpacity onPress={handleSaveDraft} disabled={isSaving}>
+            <TouchableOpacity
+              onPress={handleSaveDraft}
+              disabled={isSaving}
+              style={{
+                paddingHorizontal: 16,
+                paddingVertical: 8,
+                borderRadius: 20,
+                backgroundColor: 'white',
+                borderWidth: 1,
+                borderColor: '#E5E7EB',
+                alignItems: 'center',
+                justifyContent: 'center',
+                minWidth: 60,
+              }}
+            >
               {isSaving ? (
-                <ActivityIndicator size="small" color="#4F46E5" />
+                <ActivityIndicator size="small" color="#4F6F5A" />
               ) : (
-                <Text className="text-primary-600 text-base">Save</Text>
+                <Text style={{ color: '#4F6F5A', fontSize: 14, fontWeight: '500' }}>Save</Text>
               )}
             </TouchableOpacity>
           ),

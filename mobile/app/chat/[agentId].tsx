@@ -761,14 +761,38 @@ export default function ChatScreen() {
           },
           headerShadowVisible: false,
           headerLeft: () => (
-            <Pressable onPress={() => router.back()} className="p-2 -ml-2">
-              <ChevronLeftIcon size={24} color={colors.textPrimary} />
+            <Pressable
+              onPress={() => router.back()}
+              style={{
+                width: 40,
+                height: 40,
+                borderRadius: 20,
+                backgroundColor: 'white',
+                borderWidth: 1,
+                borderColor: '#E5E7EB',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <ChevronLeftIcon size={20} color={colors.textPrimary} />
             </Pressable>
           ),
           headerRight: hasUserSentMessage
             ? () => (
-                <Pressable onPress={() => setShowInfoModal(true)} className="p-2 -mr-2">
-                  <InfoIcon size={22} color={colors.textSecondary} />
+                <Pressable
+                  onPress={() => setShowInfoModal(true)}
+                  style={{
+                    width: 40,
+                    height: 40,
+                    borderRadius: 20,
+                    backgroundColor: 'white',
+                    borderWidth: 1,
+                    borderColor: '#E5E7EB',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <InfoIcon size={20} color={colors.textSecondary} />
                 </Pressable>
               )
             : undefined,
