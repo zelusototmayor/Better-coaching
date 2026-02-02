@@ -1,0 +1,9 @@
+# Better Coaching App robots.txt
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://bettercoachingapp.com/sitemap.xml
+
+# Block API endpoints
+Disallow: /api/
