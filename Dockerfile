@@ -3,6 +3,10 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
+# Set build-time environment variables for Next.js
+ARG NEXT_PUBLIC_MIXPANEL_TOKEN
+ENV NEXT_PUBLIC_MIXPANEL_TOKEN=$NEXT_PUBLIC_MIXPANEL_TOKEN
+
 # Copy package files from web directory
 COPY web/package*.json ./
 
@@ -12,7 +16,7 @@ RUN npm ci
 # Copy source code from web directory
 COPY web/ .
 
-# Build Next.js app
+# Build Next.js app (NEXT_PUBLIC_* vars are baked in at build time)
 RUN npm run build
 
 # Production stage

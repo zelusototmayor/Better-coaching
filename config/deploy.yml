@@ -33,3 +33,5 @@ ssh:
 
 builder:
   arch: amd64
+  args:
+    NEXT_PUBLIC_MIXPANEL_TOKEN: "c6493b1467cec97b8dbaa4af2397613d"
