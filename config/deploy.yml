@@ -33,4 +33,3 @@ ssh:
 
 builder:
   arch: amd64
-  context: web
