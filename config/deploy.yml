@@ -14,9 +14,9 @@ servers:
 proxy:
   ssl: true
   host: bettercoachingapp.com
-  app_port: 3000
+  app_port: 3001
   healthcheck:
-    path: /health
+    path: /
 
 registry:
   username: zelusottomayor
@@ -33,3 +33,4 @@ ssh:
 
 builder:
   arch: amd64
+  context: web
