@@ -16,6 +16,11 @@ export const initMixpanel = () => {
     api_host: 'https://api-eu.mixpanel.com',
   });
   
+  // Expose to window for debugging/verification
+  if (typeof window !== 'undefined') {
+    (window as any).mixpanel = mixpanel;
+  }
+  
   initialized = true;
 };
 
