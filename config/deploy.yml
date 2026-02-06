@@ -30,3 +30,6 @@ env:
 
 ssh:
   user: root
+
+builder:
+  arch: amd64
