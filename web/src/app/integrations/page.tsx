@@ -1,10 +1,13 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import AppLayout from '@/components/AppLayout';
 import { useAuthStore } from '@/lib/store';
 import { integrationsApi, ApiError } from '@/lib/api';
+
+// Force dynamic rendering to avoid SSG issues with useSearchParams
+export const dynamic = 'force-dynamic';
 
 interface Connection {
   id: string;
