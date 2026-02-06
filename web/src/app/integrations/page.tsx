@@ -6,9 +6,6 @@ import AppLayout from '@/components/AppLayout';
 import { useAuthStore } from '@/lib/store';
 import { integrationsApi, ApiError } from '@/lib/api';
 
-// Force dynamic rendering to avoid SSG issues with useSearchParams
-export const dynamic = 'force-dynamic';
-
 interface Connection {
   id: string;
   provider: string;
@@ -58,7 +55,8 @@ const PROVIDERS = [
   },
 ];
 
-export default function IntegrationsPage() {
+// Inner component that uses useSearchParams
+function IntegrationsContent() {
   const { accessToken } = useAuthStore();
   const searchParams = useSearchParams();
   const [connections, setConnections] = useState<Connection[]>([]);
@@ -145,7 +143,7 @@ export default function IntegrationsPage() {
   }
 
   return (
-    <AppLayout>
+    <>
       <div className="mb-8">
         <h1 className="heading-section">
           Integrations
@@ -233,6 +231,20 @@ export default function IntegrationsPage() {
           })}
         </div>
       )}
+    </>
+  );
+}
+
+export default function IntegrationsPage() {
+  return (
+    <AppLayout>
+      <Suspense fallback={
+        <div className="flex items-center justify-center py-12">
+          <div className="w-8 h-8 spinner"></div>
+        </div>
+      }>
+        <IntegrationsContent />
+      </Suspense>
     </AppLayout>
   );
 }
