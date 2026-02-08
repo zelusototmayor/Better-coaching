@@ -9,7 +9,7 @@ export function Hero() {
       <div className="container-landing">
         <div className="text-center max-w-3xl mx-auto animate-fade-up">
           <h1 className="heading-hero">
-            Your expertise, amplified.
+            AI coaching marketplace for experts and learners.
           </h1>
 
           <p className="mt-6 text-lg sm:text-xl body-text leading-relaxed">
