@@ -56,6 +56,70 @@ export default function RootLayout({
             }),
           }}
         />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'FAQPage',
+              mainEntity: [
+                {
+                  '@type': 'Question',
+                  name: 'What is Better Coaching?',
+                  acceptedAnswer: {
+                    '@type': 'Answer',
+                    text: 'Better Coaching is an AI-powered coaching marketplace where expert coaches create AI agents based on their real methodologies. Users can access personalized coaching 24/7 at a fraction of traditional coaching costs.',
+                  },
+                },
+                {
+                  '@type': 'Question',
+                  name: 'How does AI coaching work on Better Coaching?',
+                  acceptedAnswer: {
+                    '@type': 'Answer',
+                    text: 'Real coaches upload their frameworks, methods, and expertise. Our AI creates a coaching agent that can guide clients through their methodology — providing personalized advice, accountability, and structured growth plans anytime.',
+                  },
+                },
+                {
+                  '@type': 'Question',
+                  name: 'Is AI coaching as effective as human coaching?',
+                  acceptedAnswer: {
+                    '@type': 'Answer',
+                    text: 'AI coaching on Better Coaching is built from real expert methodologies, so you get proven frameworks delivered with infinite patience and availability. It excels at daily accountability, structured exercises, and on-demand guidance. For complex personal situations, many users combine AI coaching with periodic human sessions.',
+                  },
+                },
+                {
+                  '@type': 'Question',
+                  name: 'Can I create my own AI coaching agent?',
+                  acceptedAnswer: {
+                    '@type': 'Answer',
+                    text: 'Yes! If you are a coach, consultant, or expert, you can create an AI agent based on your unique methodology. Upload your frameworks, set your pricing, and reach clients globally without trading more hours for income.',
+                  },
+                },
+                {
+                  '@type': 'Question',
+                  name: 'How much does Better Coaching cost?',
+                  acceptedAnswer: {
+                    '@type': 'Answer',
+                    text: 'Better Coaching offers free access to select coaching agents. Premium agents from top coaches are available through affordable subscriptions — typically 90% less than traditional 1-on-1 coaching sessions.',
+                  },
+                },
+              ],
+            }),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Organization',
+              name: 'Better Coaching',
+              url: 'https://bettercoachingapp.com',
+              description:
+                'AI-powered coaching marketplace connecting expert coaches with clients through intelligent coaching agents.',
+            }),
+          }}
+        />
         <MixpanelProvider>{children}</MixpanelProvider>
       </body>
     </html>
