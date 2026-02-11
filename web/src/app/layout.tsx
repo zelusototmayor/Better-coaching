@@ -120,6 +120,22 @@ export default function RootLayout({
             }),
           }}
         />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'WebSite',
+              name: 'Better Coaching',
+              url: 'https://bettercoachingapp.com/',
+              potentialAction: {
+                '@type': 'SearchAction',
+                target: 'https://bettercoachingapp.com/?q={search_term_string}',
+                'query-input': 'required name=search_term_string',
+              },
+            }),
+          }}
+        />
         <MixpanelProvider>{children}</MixpanelProvider>
       </body>
     </html>
