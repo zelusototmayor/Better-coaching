@@ -20,7 +20,13 @@ function SEOUseCases() {
           Choose an expert-built agent and apply a framework daily.
         </p>
 
-        <div className="mt-10 grid gap-6 md:grid-cols-3">
+        <div className="mt-10 grid gap-6 md:grid-cols-4">
+          <article className="rounded-2xl border border-slate-200 p-6">
+            <h3 className="text-xl font-semibold text-slate-900">Team meeting prep coaching</h3>
+            <p className="mt-3 text-slate-700">
+              Rehearse difficult updates, sharpen talking points, and enter leadership meetings with clearer decisions.
+            </p>
+          </article>
           <article className="rounded-2xl border border-slate-200 p-6">
             <h3 className="text-xl font-semibold text-slate-900">Founder decision support</h3>
             <p className="mt-3 text-slate-700">
