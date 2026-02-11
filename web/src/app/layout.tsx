@@ -10,9 +10,9 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://bettercoachingapp.com'),
-  title: 'Better Coaching - AI Coaching Marketplace',
+  title: 'Better Coaching | AI Coaching App for Founders, Leaders, and Creators',
   description:
-    'Create AI coaching agents from your expertise, or discover the perfect coach for your journey. Real methodologies from real experts.',
+    'AI coaching app for founders, leaders, and creators. Get expert-built coaching agents for decision-making, communication, and accountability.',
   alternates: {
     canonical: '/',
   },
@@ -24,9 +24,9 @@ export const metadata: Metadata = {
     'expert guidance',
   ],
   openGraph: {
-    title: 'Better Coaching - AI Coaching Marketplace',
+    title: 'Better Coaching | AI Coaching App for Founders, Leaders, and Creators',
     description:
-      'Create AI coaching agents from your expertise, or discover the perfect coach for your journey.',
+      'AI coaching app for founders, leaders, and creators with expert-built agents for better decisions and execution.',
     url: 'https://bettercoachingapp.com/',
     type: 'website',
   },
@@ -52,7 +52,7 @@ export default function RootLayout({
               operatingSystem: 'Web',
               url: 'https://bettercoachingapp.com/',
               description:
-                'Create AI coaching agents from your expertise, or discover the perfect coach for your journey.',
+                'AI coaching app for founders, leaders, and creators with expert-built coaching agents and practical frameworks.',
             }),
           }}
         />
@@ -93,6 +93,14 @@ export default function RootLayout({
                   acceptedAnswer: {
                     '@type': 'Answer',
                     text: 'Yes! If you are a coach, consultant, or expert, you can create an AI agent based on your unique methodology. Upload your frameworks, set your pricing, and reach clients globally without trading more hours for income.',
+                  },
+                },
+                {
+                  '@type': 'Question',
+                  name: 'Is Better Coaching a good AI coaching app for founders?',
+                  acceptedAnswer: {
+                    '@type': 'Answer',
+                    text: 'Yes. Founders use Better Coaching to prepare investor updates, pressure-test strategic decisions, and build consistent execution rhythms with expert-built coaching frameworks.',
                   },
                 },
                 {
