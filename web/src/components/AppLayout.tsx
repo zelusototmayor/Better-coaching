@@ -35,6 +35,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
   };
 
   const navItems = [
+    { href: '/agents', label: 'Marketplace' },
     { href: '/dashboard', label: 'My Agents' },
     { href: '/integrations', label: 'Integrations' },
   ];

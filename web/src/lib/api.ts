@@ -86,6 +86,31 @@ export const authApi = {
 
 // Agents API
 export const agentsApi = {
+  browseAgents: (params?: { category?: string; search?: string }) => {
+    const searchParams = new URLSearchParams();
+    if (params?.category) searchParams.set('category', params.category);
+    if (params?.search) searchParams.set('search', params.search);
+    const qs = searchParams.toString();
+    return fetchApi<{
+      agents: Array<{
+        id: string;
+        name: string;
+        tagline?: string;
+        description?: string;
+        avatarUrl?: string;
+        category: string;
+        tags: string[];
+        tier: string;
+        greetingMessage: string;
+        conversationStarters: string[];
+        usageCount: number;
+        ratingAvg: number;
+        ratingCount: number;
+        createdAt: string;
+      }>;
+    }>(`/api/agents${qs ? `?${qs}` : ''}`);
+  },
+
   getMyAgents: (token: string) =>
     fetchApi<{
       agents: Array<{
