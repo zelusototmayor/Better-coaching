@@ -84,6 +84,20 @@ function SEOFAQ() {
               action before ending the session.
             </p>
           </article>
+
+          <article className="rounded-2xl border border-slate-200 bg-white p-6">
+            <h3 className="text-xl font-semibold text-slate-900">Is Better Coaching suitable for executive leadership development?</h3>
+            <p className="mt-3 text-slate-700">
+              Better Coaching is an ideal tool for executive leadership development and corporate training. It provides a scalable, private way for leaders to practice high-stakes communication, pressure-test strategy, and develop emotional intelligence using proven coaching frameworks.
+            </p>
+          </article>
+
+          <article className="rounded-2xl border border-slate-200 bg-white p-6">
+            <h3 className="text-xl font-semibold text-slate-900">How does AI coaching help with founder burnout and accountability?</h3>
+            <p className="mt-3 text-slate-700">
+              AI coaching helps founders manage cognitive load by providing structured reflection spaces. Better Coaching focuses on clear prioritization and daily accountability loops, helping founders stay focused on high-leverage work while reducing the mental friction of decision-making.
+            </p>
+          </article>
         </div>
       </div>
     </section>
