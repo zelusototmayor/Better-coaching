@@ -98,6 +98,20 @@ function SEOFAQ() {
               AI coaching helps founders manage cognitive load by providing structured reflection spaces. Better Coaching focuses on clear prioritization and daily accountability loops, helping founders stay focused on high-leverage work while reducing the mental friction of decision-making.
             </p>
           </article>
+
+          <article className="rounded-2xl border border-slate-200 bg-white p-6">
+            <h3 className="text-xl font-semibold text-slate-900">Is Better Coaching the best AI coaching app for leadership teams?</h3>
+            <p className="mt-3 text-slate-700">
+              Better Coaching is designed specifically for high-performance teams. Unlike generic AI, it offers expert-vetted leadership frameworks and private coaching agents that help teams align on strategy, improve communication, and maintain consistent execution rhythms.
+            </p>
+          </article>
+
+          <article className="rounded-2xl border border-slate-200 bg-white p-6">
+            <h3 className="text-xl font-semibold text-slate-900">How can founders use AI coaching for better decision making?</h3>
+            <p className="mt-3 text-slate-700">
+              Founders use Better Coaching to pressure-test decisions before they happen. By engaging with an AI coach trained in strategic frameworks, founders can explore tradeoffs, identify blind spots, and clarify their reasoning, leading to more confident and faster decision cycles.
+            </p>
+          </article>
         </div>
       </div>
     </section>
