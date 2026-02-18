@@ -5,6 +5,7 @@ import {
   HowItWorks,
   Categories,
   FooterCTA,
+  Comparison,
 } from '@/components/landing';
 import { AuthRedirect } from '@/components/landing/AuthRedirect';
 
@@ -119,34 +120,7 @@ function SEOFAQ() {
 }
 
 function ComparisonSection() {
-  return (
-    <section className="bg-slate-50 px-4 py-20">
-      <div className="mx-auto max-w-5xl">
-        <h2 className="text-3xl font-bold text-slate-900 md:text-4xl">
-          Better Coaching vs generic AI chatbots
-        </h2>
-        <p className="mt-4 max-w-3xl text-lg text-slate-600">
-          Generic chatbots answer questions. Better Coaching delivers expert-built coaching systems with repeatable frameworks,
-          accountability structure, and outcomes you can track.
-        </p>
-
-        <div className="mt-10 grid gap-6 md:grid-cols-2">
-          <article className="rounded-2xl border border-slate-200 bg-white p-6">
-            <h3 className="text-xl font-semibold text-slate-900">Structured coaching, not random chat</h3>
-            <p className="mt-3 text-slate-700">
-              Every coach agent follows a methodology with practical exercises, reflection prompts, and weekly execution loops.
-            </p>
-          </article>
-          <article className="rounded-2xl border border-slate-200 bg-white p-6">
-            <h3 className="text-xl font-semibold text-slate-900">Built for creators, founders, and teams</h3>
-            <p className="mt-3 text-slate-700">
-              Use Better Coaching for leadership decisions, accountability systems, communication practice, and performance growth.
-            </p>
-          </article>
-        </div>
-      </div>
-    </section>
-  );
+  return <Comparison />;
 }
 
 export default function Home() {

@@ -17,11 +17,19 @@ export const metadata: Metadata = {
     canonical: '/',
   },
   keywords: [
-    'AI coaching',
+    'AI coaching app',
+    'AI coaching app for founders',
+    'AI leadership coaching',
     'coaching marketplace',
-    'personal development',
+    'AI coaching for teams',
+    'executive coaching AI',
+    'best AI coaching app',
+    'sales team coaching AI',
+    'AI business coach',
     'coaching agents',
-    'expert guidance',
+    'personal development AI',
+    'AI coaching for managers',
+    'remote team coaching app',
   ],
   openGraph: {
     title: 'Better Coaching | AI Coaching App for Founders, Leaders, and Creators',
@@ -109,6 +117,38 @@ export default function RootLayout({
                   acceptedAnswer: {
                     '@type': 'Answer',
                     text: 'Better Coaching offers free access to select coaching agents. Premium agents from top coaches are available through affordable subscriptions — typically 90% less than traditional 1-on-1 coaching sessions.',
+                  },
+                },
+                {
+                  '@type': 'Question',
+                  name: 'What is the best AI coaching app for team leaders and managers?',
+                  acceptedAnswer: {
+                    '@type': 'Answer',
+                    text: 'Better Coaching is designed specifically for team leaders who need to practice difficult conversations, improve communication clarity, and develop consistent management frameworks. Its expert-built agents provide structured coaching routines that managers can run daily — unlike generic AI chat tools that require you to build your own methodology from scratch.',
+                  },
+                },
+                {
+                  '@type': 'Question',
+                  name: 'Can I use Better Coaching for sales team training?',
+                  acceptedAnswer: {
+                    '@type': 'Answer',
+                    text: 'Yes. Sales teams use Better Coaching to practice objection handling, sharpen discovery questioning, and prepare for high-stakes pitches. The AI coaching agents can simulate realistic prospect scenarios, giving reps deliberate practice reps without needing a manager to roleplay with them.',
+                  },
+                },
+                {
+                  '@type': 'Question',
+                  name: 'How does Better Coaching compare to hiring a business coach?',
+                  acceptedAnswer: {
+                    '@type': 'Answer',
+                    text: 'A human business coach charges $200–$500 per session and is available once or twice a month. Better Coaching agents are available 24/7, built from real expert methodologies, and cost a fraction of the price. For daily accountability, reflection, and skill-building, AI coaching on Better Coaching delivers more consistent practice than infrequent human sessions.',
+                  },
+                },
+                {
+                  '@type': 'Question',
+                  name: 'Does Better Coaching work for remote and distributed teams?',
+                  acceptedAnswer: {
+                    '@type': 'Answer',
+                    text: 'Better Coaching is ideal for remote and distributed teams. Every team member can access the same expert-built coaching frameworks on their own schedule, creating alignment around communication standards, decision-making processes, and accountability habits — without requiring synchronous meetings.',
                   },
                 },
               ],

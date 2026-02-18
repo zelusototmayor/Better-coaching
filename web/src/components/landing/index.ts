@@ -1,4 +1,5 @@
 export { Navigation } from './Navigation';
+export { Comparison } from './Comparison';
 export { Hero } from './Hero';
 export { AppPreview } from './AppPreview';
 export { ValuePillars } from './ValuePillars';
