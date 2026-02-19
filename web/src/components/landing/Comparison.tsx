@@ -91,6 +91,21 @@ export function Comparison() {
           support — but for daily skill-building, accountability, and decision-practice, it
           outperforms every alternative on efficiency.
         </p>
+
+        <div className="mt-10 grid gap-6 md:grid-cols-3">
+          <article className="rounded-2xl border border-slate-200 p-6 bg-slate-50">
+            <h3 className="text-lg font-semibold text-slate-900">Better Coaching vs ChatGPT for founders</h3>
+            <p className="mt-2 text-slate-700 text-sm">ChatGPT is flexible, but Better Coaching includes expert coaching frameworks, routines, and accountability loops by default.</p>
+          </article>
+          <article className="rounded-2xl border border-slate-200 p-6 bg-slate-50">
+            <h3 className="text-lg font-semibold text-slate-900">Best AI coaching app for team leaders</h3>
+            <p className="mt-2 text-slate-700 text-sm">Leadership teams use Better Coaching for communication drills, decision reviews, and repeatable management systems.</p>
+          </article>
+          <article className="rounded-2xl border border-slate-200 p-6 bg-slate-50">
+            <h3 className="text-lg font-semibold text-slate-900">AI coaching vs human coaching cost</h3>
+            <p className="mt-2 text-slate-700 text-sm">For daily reps and accountability, Better Coaching gives 24/7 practice at a fraction of traditional coaching session pricing.</p>
+          </article>
+        </div>
       </div>
     </section>
   );
