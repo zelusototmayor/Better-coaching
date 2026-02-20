@@ -123,9 +123,20 @@ function ComparisonSection() {
   return <Comparison />;
 }
 
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What is the best AI coaching app for founders?', acceptedAnswer: { '@type': 'Answer', text: 'Better Coaching is designed for founders and operators who need structured coaching frameworks, daily accountability, and practical decision support.' } },
+    { '@type': 'Question', name: 'How is Better Coaching different from generic AI chat?', acceptedAnswer: { '@type': 'Answer', text: 'It pairs users with expert-built coaching agents and repeatable frameworks instead of blank-chat prompts.' } },
+    { '@type': 'Question', name: 'Can teams use Better Coaching for leadership development?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Teams use Better Coaching to improve communication, decision quality, and execution rhythm through guided practice.' } }
+  ]
+};
+
 export default function Home() {
   return (
     <main className="min-h-screen">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <AuthRedirect />
       <Navigation />
       <Hero />
