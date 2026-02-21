@@ -133,10 +133,31 @@ const faqSchema = {
   ]
 };
 
+const softwareApplicationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'Better Coaching',
+  applicationCategory: 'BusinessApplication',
+  operatingSystem: 'Web',
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'USD'
+  },
+  description: 'AI coaching platform for founders and leadership teams using expert-built frameworks, accountability loops, and practical decision support.',
+  featureList: [
+    'Expert-built AI coaching agents',
+    'Leadership decision support workflows',
+    'Daily accountability and reflection loops',
+    'Private coaching sessions for teams and founders'
+  ]
+};
+
 export default function Home() {
   return (
     <main className="min-h-screen">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareApplicationSchema) }} />
       <AuthRedirect />
       <Navigation />
       <Hero />
