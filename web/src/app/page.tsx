@@ -46,6 +46,18 @@ function SEOUseCases() {
               Break large goals into daily actions, track habits, and stay in momentum with structured prompts from your chosen coach.
             </p>
           </article>
+          <article className="rounded-2xl border border-slate-200 p-6">
+            <h3 className="text-xl font-semibold text-slate-900">Remote team coaching</h3>
+            <p className="mt-3 text-slate-700">
+              Distributed teams lose alignment fast. Use AI coaching to run async check-ins, practice difficult feedback conversations, and keep remote managers sharp on communication skills without scheduling overhead.
+            </p>
+          </article>
+          <article className="rounded-2xl border border-slate-200 p-6">
+            <h3 className="text-xl font-semibold text-slate-900">Sales team communication training</h3>
+            <p className="mt-3 text-slate-700">
+              Help sales reps rehearse objection handling, discovery calls, and pitch delivery with AI-guided practice sessions that provide specific feedback on persuasion structure and clarity.
+            </p>
+          </article>
         </div>
       </div>
     </section>
@@ -129,7 +141,9 @@ const faqSchema = {
   mainEntity: [
     { '@type': 'Question', name: 'What is the best AI coaching app for founders?', acceptedAnswer: { '@type': 'Answer', text: 'Better Coaching is designed for founders and operators who need structured coaching frameworks, daily accountability, and practical decision support.' } },
     { '@type': 'Question', name: 'How is Better Coaching different from generic AI chat?', acceptedAnswer: { '@type': 'Answer', text: 'It pairs users with expert-built coaching agents and repeatable frameworks instead of blank-chat prompts.' } },
-    { '@type': 'Question', name: 'Can teams use Better Coaching for leadership development?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Teams use Better Coaching to improve communication, decision quality, and execution rhythm through guided practice.' } }
+    { '@type': 'Question', name: 'Can teams use Better Coaching for leadership development?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Teams use Better Coaching to improve communication, decision quality, and execution rhythm through guided practice.' } },
+    { '@type': 'Question', name: 'Is Better Coaching good for remote teams?', acceptedAnswer: { '@type': 'Answer', text: 'Better Coaching is ideal for remote teams. It provides async coaching sessions, structured communication practice, and leadership development without requiring everyone to be online at the same time. Remote managers use it to practice feedback delivery, run reflection loops, and maintain alignment across time zones.' } },
+    { '@type': 'Question', name: 'Can sales teams use AI coaching for objection handling practice?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Sales teams use Better Coaching to rehearse discovery calls, objection handling, and pitch structure. The AI provides specific feedback on persuasion clarity and helps reps build confidence through repetition.' } }
   ]
 };
 
