@@ -58,6 +58,12 @@ function SEOUseCases() {
               Help sales reps rehearse objection handling, discovery calls, and pitch delivery with AI-guided practice sessions that provide specific feedback on persuasion structure and clarity.
             </p>
           </article>
+          <article className="rounded-2xl border border-slate-200 p-6">
+            <h3 className="text-xl font-semibold text-slate-900">Conflict resolution coaching</h3>
+            <p className="mt-3 text-slate-700">
+              Prepare for tough conversations with colleagues or direct reports. The AI coach helps you structure your message, anticipate reactions, and practice maintaining composure under pressure.
+            </p>
+          </article>
         </div>
       </div>
     </section>
@@ -123,6 +129,12 @@ function SEOFAQ() {
             <h3 className="text-xl font-semibold text-slate-900">How can founders use AI coaching for better decision making?</h3>
             <p className="mt-3 text-slate-700">
               Founders use Better Coaching to pressure-test decisions before they happen. By engaging with an AI coach trained in strategic frameworks, founders can explore tradeoffs, identify blind spots, and clarify their reasoning, leading to more confident and faster decision cycles.
+            </p>
+          </article>
+          <article className="rounded-2xl border border-slate-200 bg-white p-6">
+            <h3 className="text-xl font-semibold text-slate-900">Is my coaching data private?</h3>
+            <p className="mt-3 text-slate-700">
+              Yes. Your coaching sessions are private and encrypted. We prioritize user privacy and do not use your personal conversation data to train public AI models.
             </p>
           </article>
         </div>
