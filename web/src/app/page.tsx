@@ -131,6 +131,14 @@ function SEOFAQ() {
               Founders use Better Coaching to pressure-test decisions before they happen. By engaging with an AI coach trained in strategic frameworks, founders can explore tradeoffs, identify blind spots, and clarify their reasoning, leading to more confident and faster decision cycles.
             </p>
           </article>
+
+          <article className="rounded-2xl border border-slate-200 bg-white p-6">
+            <h3 className="text-xl font-semibold text-slate-900">Can I use Better Coaching to prepare for 1:1 meetings with direct reports?</h3>
+            <p className="mt-3 text-slate-700">
+              Yes. Managers use Better Coaching to rehearse feedback conversations, define one clear outcome for each 1:1, and practice concise follow-up language before the meeting starts.
+            </p>
+          </article>
+
           <article className="rounded-2xl border border-slate-200 bg-white p-6">
             <h3 className="text-xl font-semibold text-slate-900">Is my coaching data private?</h3>
             <p className="mt-3 text-slate-700">
@@ -156,6 +164,7 @@ const faqSchema = {
     { '@type': 'Question', name: 'Can teams use Better Coaching for leadership development?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Teams use Better Coaching to improve communication, decision quality, and execution rhythm through guided practice.' } },
     { '@type': 'Question', name: 'Is Better Coaching good for remote teams?', acceptedAnswer: { '@type': 'Answer', text: 'Better Coaching is ideal for remote teams. It provides async coaching sessions, structured communication practice, and leadership development without requiring everyone to be online at the same time. Remote managers use it to practice feedback delivery, run reflection loops, and maintain alignment across time zones.' } },
     { '@type': 'Question', name: 'Can sales teams use AI coaching for objection handling practice?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Sales teams use Better Coaching to rehearse discovery calls, objection handling, and pitch structure. The AI provides specific feedback on persuasion clarity and helps reps build confidence through repetition.' } }
+    { '@type': 'Question', name: 'Can managers use Better Coaching to prepare for 1:1 meetings?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Managers rehearse feedback conversations, test wording, and define clear meeting outcomes before live 1:1s.' } },
   ]
 };
 
