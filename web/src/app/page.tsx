@@ -194,11 +194,29 @@ const softwareApplicationSchema = {
   ]
 };
 
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Better Coaching',
+  url: 'https://bettercoachingapp.com',
+  logo: 'https://bettercoachingapp.com/logo.png',
+  description: 'AI leadership coaching platform for founders, remote teams, and sales professionals.',
+  sameAs: [
+    'https://twitter.com/bettercoaching'
+  ],
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'USD'
+  }
+};
+
 export default function Home() {
   return (
     <main className="min-h-screen">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareApplicationSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }} />
       <AuthRedirect />
       <Navigation />
       <Hero />

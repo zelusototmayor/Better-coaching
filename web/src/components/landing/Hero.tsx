@@ -9,11 +9,11 @@ export function Hero() {
       <div className="container-landing">
         <div className="text-center max-w-3xl mx-auto animate-fade-up">
           <h1 className="heading-hero">
-            Better Coaching: The AI Coaching Marketplace for Experts & Learners
+            Better Coaching: AI Leadership Coaching for Founders & Remote Teams
           </h1>
 
           <p className="mt-6 text-lg sm:text-xl body-text leading-relaxed">
-            Create AI coaching agents from your knowledge, or discover the perfect coach for your journey.
+            Scalable executive coaching for modern teams. Practice difficult conversations, run weekly reflection loops, and improve decision quality with expert-built AI agents.
           </p>
 
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
