@@ -200,6 +200,20 @@ function SEOFAQ() {
               Better Coaching is an excellent tool for first-time managers. New managers often struggle with the shift from individual contributor to people leader — giving feedback, running 1:1s, and setting clear direction. Our expert-built leadership coaching agents walk first-time managers through proven frameworks for these exact challenges, with safe practice before the real conversation.
             </p>
           </article>
+
+          <article className="rounded-2xl border border-slate-200 bg-white p-6">
+            <h3 className="text-xl font-semibold text-slate-900">Can I use Better Coaching to prepare for a performance review?</h3>
+            <p className="mt-3 text-slate-700">
+              Yes. Performance reviews are high-stakes conversations that benefit enormously from preparation. Use Better Coaching to structure your self-assessment, rehearse how you present accomplishments clearly, prepare for difficult feedback, and practice the specific language of salary and promotion conversations — before you're in the room.
+            </p>
+          </article>
+
+          <article className="rounded-2xl border border-slate-200 bg-white p-6">
+            <h3 className="text-xl font-semibold text-slate-900">Can I use Better Coaching to become a better communicator as a non-native English speaker?</h3>
+            <p className="mt-3 text-slate-700">
+              Yes. Non-native English speakers use Better Coaching to practice business conversations, refine how they frame ideas in English, and build confidence for meetings, presentations, and high-stakes discussions. The AI is infinitely patient — you can repeat a conversation as many times as you need without social pressure, building fluency and confidence through real practice.
+            </p>
+          </article>
         </div>
       </div>
     </section>
@@ -227,6 +241,8 @@ const faqSchema = {
     { '@type': 'Question', name: 'How much does AI coaching cost compared to a human executive coach?', acceptedAnswer: { '@type': 'Answer', text: 'Human executive coaches charge $200–$1,000 per session. Better Coaching starts free, giving you daily coaching access for less than the cost of a single human coaching hour.' } },
     { '@type': 'Question', name: 'Can Better Coaching help improve public speaking and executive presence?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Better Coaching includes communication coaching workflows for executive presence, structured storytelling, and high-stakes presentation delivery including board updates and investor pitches.' } },
     { '@type': 'Question', name: 'Is Better Coaching suitable for first-time managers?', acceptedAnswer: { '@type': 'Answer', text: 'Better Coaching is ideal for first-time managers transitioning from individual contributor to people leader, with expert frameworks for feedback, 1:1s, and clear direction-setting.' } },
+    { '@type': 'Question', name: 'Can I use Better Coaching to prepare for a performance review?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Use Better Coaching to structure your self-assessment, rehearse how you present accomplishments, prepare for difficult feedback, and practice salary and promotion conversation language — before you\'re in the room.' } },
+    { '@type': 'Question', name: 'Can Better Coaching help non-native English speakers become better communicators?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Non-native English speakers use Better Coaching to practice business conversations and build confidence for meetings, presentations, and high-stakes discussions. The AI is infinitely patient — repeat conversations as many times as needed without social pressure.' } },
   ]
 };
 
