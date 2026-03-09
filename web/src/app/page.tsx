@@ -87,6 +87,20 @@ function SEOFAQ() {
 
         <div className="mt-10 space-y-6">
           <article className="rounded-2xl border border-slate-200 bg-white p-6">
+            <h3 className="text-xl font-semibold text-slate-900">What is Better Coaching?</h3>
+            <p className="mt-3 text-slate-700">
+              Better Coaching is an AI coaching platform that gives founders, remote teams, and creators access to expert-built AI coaches trained on proven frameworks. You get personalized coaching on decision-making, communication, leadership, and goal execution — on demand, without scheduling overhead.
+            </p>
+          </article>
+
+          <article className="rounded-2xl border border-slate-200 bg-white p-6">
+            <h3 className="text-xl font-semibold text-slate-900">How is Better Coaching different from ChatGPT?</h3>
+            <p className="mt-3 text-slate-700">
+              Better Coaching agents are pre-loaded with specific coaching frameworks and methodologies — think ICF-trained coaching principles, decision-making models, and leadership frameworks. Unlike general-purpose AI, each agent stays on-topic, asks the right follow-up questions, and provides structured coaching sessions rather than generic answers.
+            </p>
+          </article>
+
+          <article className="rounded-2xl border border-slate-200 bg-white p-6">
             <h3 className="text-xl font-semibold text-slate-900">How is Better Coaching different from generic AI chat tools?</h3>
             <p className="mt-3 text-slate-700">
               Better Coaching uses expert-built coaching methodologies instead of blank-chat prompts. You get structured frameworks,
@@ -151,6 +165,41 @@ function SEOFAQ() {
               Yes. Your coaching sessions are private and encrypted. We prioritize user privacy and do not use your personal conversation data to train public AI models.
             </p>
           </article>
+
+          <article className="rounded-2xl border border-slate-200 bg-white p-6">
+            <h3 className="text-xl font-semibold text-slate-900">How much does AI coaching cost compared to a human executive coach?</h3>
+            <p className="mt-3 text-slate-700">
+              Human executive coaches typically charge $200–$1,000 per session. Better Coaching starts free and scales to affordable monthly plans — giving you daily coaching access for less than the cost of a single human coaching hour. For teams and organizations, the ROI is even stronger: structured coaching practice at scale without the scheduling and cost overhead of per-seat human coaching.
+            </p>
+          </article>
+
+          <article className="rounded-2xl border border-slate-200 bg-white p-6">
+            <h3 className="text-xl font-semibold text-slate-900">How much does Better Coaching cost?</h3>
+            <p className="mt-3 text-slate-700">
+              Better Coaching offers a free tier to get started. Paid plans unlock unlimited sessions, premium coaches, and team features. See the pricing page for current plans.
+            </p>
+          </article>
+
+          <article className="rounded-2xl border border-slate-200 bg-white p-6">
+            <h3 className="text-xl font-semibold text-slate-900">Can I use Better Coaching for sales training?</h3>
+            <p className="mt-3 text-slate-700">
+              Yes. Sales teams use Better Coaching to rehearse objection handling, practice discovery calls, and refine pitch delivery. AI coaches give specific feedback on persuasion structure, pacing, and clarity — helping reps improve faster than traditional role-play.
+            </p>
+          </article>
+
+          <article className="rounded-2xl border border-slate-200 bg-white p-6">
+            <h3 className="text-xl font-semibold text-slate-900">Can I use Better Coaching to improve my public speaking and executive presence?</h3>
+            <p className="mt-3 text-slate-700">
+              Yes. Better Coaching includes communication coaching workflows specifically designed to improve executive presence, structured storytelling, and high-stakes presentation delivery. Founders and managers use it to rehearse board updates, all-hands presentations, and investor pitches — with structured feedback on clarity, confidence language, and message structure.
+            </p>
+          </article>
+
+          <article className="rounded-2xl border border-slate-200 bg-white p-6">
+            <h3 className="text-xl font-semibold text-slate-900">Is Better Coaching suitable for first-time managers?</h3>
+            <p className="mt-3 text-slate-700">
+              Better Coaching is an excellent tool for first-time managers. New managers often struggle with the shift from individual contributor to people leader — giving feedback, running 1:1s, and setting clear direction. Our expert-built leadership coaching agents walk first-time managers through proven frameworks for these exact challenges, with safe practice before the real conversation.
+            </p>
+          </article>
         </div>
       </div>
     </section>
@@ -165,12 +214,19 @@ const faqSchema = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
   mainEntity: [
+    { '@type': 'Question', name: 'What is Better Coaching?', acceptedAnswer: { '@type': 'Answer', text: 'Better Coaching is an AI coaching platform that gives founders, remote teams, and creators access to expert-built AI coaches trained on proven frameworks. You get personalized coaching on decision-making, communication, leadership, and goal execution — on demand, without scheduling overhead.' } },
+    { '@type': 'Question', name: 'How is Better Coaching different from ChatGPT?', acceptedAnswer: { '@type': 'Answer', text: 'Better Coaching agents are pre-loaded with specific coaching frameworks and methodologies — think ICF-trained coaching principles, decision-making models, and leadership frameworks. Unlike general-purpose AI, each agent stays on-topic, asks the right follow-up questions, and provides structured coaching sessions rather than generic answers.' } },
+    { '@type': 'Question', name: 'How much does Better Coaching cost?', acceptedAnswer: { '@type': 'Answer', text: 'Better Coaching offers a free tier to get started. Paid plans unlock unlimited sessions, premium coaches, and team features. See the pricing page for current plans.' } },
+    { '@type': 'Question', name: 'Can I use Better Coaching for sales training?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Sales teams use Better Coaching to rehearse objection handling, practice discovery calls, and refine pitch delivery. AI coaches give specific feedback on persuasion structure, pacing, and clarity — helping reps improve faster than traditional role-play.' } },
     { '@type': 'Question', name: 'What is the best AI coaching app for founders?', acceptedAnswer: { '@type': 'Answer', text: 'Better Coaching is designed for founders and operators who need structured coaching frameworks, daily accountability, and practical decision support.' } },
     { '@type': 'Question', name: 'How is Better Coaching different from generic AI chat?', acceptedAnswer: { '@type': 'Answer', text: 'It pairs users with expert-built coaching agents and repeatable frameworks instead of blank-chat prompts.' } },
     { '@type': 'Question', name: 'Can teams use Better Coaching for leadership development?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Teams use Better Coaching to improve communication, decision quality, and execution rhythm through guided practice.' } },
     { '@type': 'Question', name: 'Is Better Coaching good for remote teams?', acceptedAnswer: { '@type': 'Answer', text: 'Better Coaching is ideal for remote teams. It provides async coaching sessions, structured communication practice, and leadership development without requiring everyone to be online at the same time. Remote managers use it to practice feedback delivery, run reflection loops, and maintain alignment across time zones.' } },
     { '@type': 'Question', name: 'Can sales teams use AI coaching for objection handling practice?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Sales teams use Better Coaching to rehearse discovery calls, objection handling, and pitch structure. The AI provides specific feedback on persuasion clarity and helps reps build confidence through repetition.' } },
     { '@type': 'Question', name: 'Can managers use Better Coaching to prepare for 1:1 meetings?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Managers rehearse feedback conversations, test wording, and define clear meeting outcomes before live 1:1s.' } },
+    { '@type': 'Question', name: 'How much does AI coaching cost compared to a human executive coach?', acceptedAnswer: { '@type': 'Answer', text: 'Human executive coaches charge $200–$1,000 per session. Better Coaching starts free, giving you daily coaching access for less than the cost of a single human coaching hour.' } },
+    { '@type': 'Question', name: 'Can Better Coaching help improve public speaking and executive presence?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Better Coaching includes communication coaching workflows for executive presence, structured storytelling, and high-stakes presentation delivery including board updates and investor pitches.' } },
+    { '@type': 'Question', name: 'Is Better Coaching suitable for first-time managers?', acceptedAnswer: { '@type': 'Answer', text: 'Better Coaching is ideal for first-time managers transitioning from individual contributor to people leader, with expert frameworks for feedback, 1:1s, and clear direction-setting.' } },
   ]
 };
 
