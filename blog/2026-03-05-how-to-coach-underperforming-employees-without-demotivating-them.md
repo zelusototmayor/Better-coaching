@@ -49,3 +49,5 @@ Managers can use AI coaching tools to rehearse difficult conversations, get feed
 ## Closing
 
 Performance improves when people know exactly what to change, by when, and how support will be provided. Coaching is not soft accountability — it's structured accountability.
+
+**Related:** [How to Motivate a Burned Out Team](/blog/how-to-motivate-a-burned-out-team) — When underperformance stems from burnout rather than capability gaps, the fix is structural, not conversational.

@@ -145,3 +145,5 @@ The return on that investment — in retention, in performance, in team culture 
 ---
 
 *Want to practice your coaching conversations before they happen? [AI Talk Coach](https://aitalkcoach.com) gives you real-time feedback on clarity, confidence, and delivery — so you show up prepared.*
+
+**Related:** [How to Motivate a Burned Out Team (Without Making It Worse)](/blog/how-to-motivate-a-burned-out-team) — When even your high performers are showing signs of burnout, the recovery playbook is structural, not motivational.
