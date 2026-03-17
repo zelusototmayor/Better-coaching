@@ -172,3 +172,8 @@ Be honest about the calibration: "I want to get there — here's what I need to 
 
 **Can Better Coaching help with specific delegation situations?**
 Yes — [Better Coaching](https://bettercoachingapp.com) helps managers work through specific scenarios, including delegation, using structured coaching conversation practice. You can work through the TASK framework for a real delegation you're planning, or practise difficult conversations about underdelivered tasks.
+
+---
+
+**Related reading:**
+- [How to Build a Coaching Culture in Your Team](/blog/how-to-build-a-coaching-culture-in-your-team)
